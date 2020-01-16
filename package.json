@@ -11,6 +11,7 @@
     "test:e2e": "cypress run"
   },
   "dependencies": {
+    "@leftshiftone/convey": "^1.2.0",
     "bootstrap": "^4.4.1",
     "next": "^9.2.0",
     "next-images": "^1.3.0",
