@@ -1,5 +1,4 @@
 {
-
   "presets": [
     [
       "next/babel",
@@ -11,6 +10,16 @@
     ]
   ],
   "plugins": [
-    "styled-jsx/babel"
+    "styled-jsx/babel",
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@lib": "./lib",
+          "@layout": "./layout"
+        }
+      }
+    ]
   ]
 }
