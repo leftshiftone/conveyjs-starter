@@ -1,6 +1,8 @@
+import React from 'react';
+
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
-import {testStyle} from 'style/TestStyle';
+import { testStyle } from 'style/TestStyle';
 
 import _JSXStyle from 'styled-jsx/style'
 

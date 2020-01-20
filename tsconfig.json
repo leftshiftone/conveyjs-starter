@@ -19,8 +19,9 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["./lib/*"],
-      "@layout/*": ["./layout/*"]
+      "@environment/*": ["./environment/*"],
+      "@layout/*": ["./layout/*"],
+      "@lib/*": ["./lib/*"]
     }
   },
   "exclude": [
