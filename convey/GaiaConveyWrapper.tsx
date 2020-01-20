@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Emitter from "@lib/emitter/Emitter";
-import CustomRenderer from "@lib/renderer/CustomRenderer";
+import Renderer from "@lib/renderer/Renderer";
 
 import {
     GAIA_ACTIONS,
@@ -81,7 +81,7 @@ export class GaiaConveyWrapper {
     }
 
     private connect(): Promise<void> {
-        const renderer = new CustomRenderer();
+        const renderer = new Renderer();
         renderer.scrollStrategy = "container";
 
         return new Promise((resolve): Promise<void> => new Gaia(renderer, listener)

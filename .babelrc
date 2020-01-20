@@ -16,6 +16,7 @@
       {
         "root": ["./"],
         "alias": {
+          "@bootstrap": "./bootstrap",
           "@components": "./components",
           "@convey" : "./convey",
           "@environment" : "./environment",
