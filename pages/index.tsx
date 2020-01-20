@@ -6,11 +6,17 @@ import { testStyle } from 'style/TestStyle';
 
 import _JSXStyle from 'styled-jsx/style'
 
+import ChatView from "@components/chat/ChatView";
+
+import { EmitterContext } from "@lib/emitter/EmitterContext";
+
 export default function() {
     return (
         <div>
-            <_JSXStyle>{testStyle}</_JSXStyle>
-            gaia-identity-web-template
+            <_JSXStyle>{ testStyle }</_JSXStyle>
+            <EmitterContext.Consumer>
+                {(emitter) => (<ChatView emitter={emitter}/>)}
+            </EmitterContext.Consumer>
         </div>
     )
 }

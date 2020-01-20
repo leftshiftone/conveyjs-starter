@@ -19,6 +19,8 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "paths": {
+      "@components/*": ["./components/*"],
+      "@convey/*": ["./convey/*"],
       "@environment/*": ["./environment/*"],
       "@layout/*": ["./layout/*"],
       "@lib/*": ["./lib/*"]

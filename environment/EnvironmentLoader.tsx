@@ -2,7 +2,9 @@
  * @author benjamin.krenn@leftshift.one - 6/21/19.
  * @since 0.1.0
  */
-import {Environment} from "./Environment";
+import {
+    Environment
+} from "./Environment";
 
 export class EnvironmentLoader {
 

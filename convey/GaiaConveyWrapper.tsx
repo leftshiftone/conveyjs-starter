@@ -45,7 +45,7 @@ class Listener implements IListener {
 
 let listener = new Listener();
 
-export default class GaiaConveyWrapper {
+export class GaiaConveyWrapper {
     private readonly gaiaUrl    : string;
     private readonly identityId : string;
     private readonly emitter    : Emitter;

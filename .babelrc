@@ -16,6 +16,8 @@
       {
         "root": ["./"],
         "alias": {
+          "@components": "./components",
+          "@convey" : "./convey",
           "@environment" : "./environment",
           "@layout": "./layout",
           "@lib": "./lib"

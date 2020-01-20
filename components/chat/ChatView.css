@@ -1,0 +1,18 @@
+.spinner-container {
+    margin: 1%;
+    text-align: center;
+}
+
+.disconnected-logo {
+    opacity: 0.5;
+}
+
+.disconnected-container {
+    margin-top: 10%;
+    margin-left: 50%;
+}
+
+.disconnected-container > small {
+    font-style: italic;
+    opacity: 0.55;
+}
