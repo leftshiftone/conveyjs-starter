@@ -1,0 +1,143 @@
+image:
+  name: 007098893018.dkr.ecr.eu-central-1.amazonaws.com/ci-image:v0.1.0
+  aws:
+    access-key: $AWS_ACCESS_KEY_ID
+    secret-key: $AWS_SECRET_ACCESS_KEY
+
+options:
+  max-time: 30
+
+clone:
+  depth: full
+
+definitions:
+  services:
+    docker:
+      memory: 2048
+
+pipelines:
+  default:
+    - step:
+        name: Test and build
+        image: circleci/node:10-browsers
+        caches:
+          - node
+        script:
+          - export CYPRESS_CACHE_FOLDER=node_modules/cypress/.cache
+          - yarn install
+          - yarn dev & # start dev server
+          - while ! nc -z localhost 3000 </dev/null; do sleep 20; done
+          - Xvfb :99 -ac & # virtual display
+          - yarn test:e2e
+          - kill -9 $(pgrep node) || true
+          - yarn build
+  custom:
+    build-and-publish-image:
+      - step:
+          name: Build
+          image: atlassian/default-image:2
+          script:
+            - yarn install
+            - echo $(node -pe "require('./package.json').version") > version.txt
+            - yarn build
+          artifacts:
+            - version.txt
+            - package.json
+      - step:
+          name: Containerize
+          caches:
+            - docker
+          script:
+            - export APP_VERSION=$(cat version.txt)
+            - export DOCKER_IMAGE_VERSION=$(date +%Y.%m.%d-%H.%M.%S)
+            - export DOCKER_BRANCH=$(if [[ "$BITBUCKET_BRANCH" != "master" ]]; then echo ${BITBUCKET_BRANCH//\//-}; else echo "master"; fi);
+            - export DOCKER_REPOSITORY=007098893018.dkr.ecr.eu-central-1.amazonaws.com/projects-mcd
+            - docker build -t $DOCKER_REPOSITORY:$APP_VERSION-dev.$DOCKER_BRANCH.$DOCKER_IMAGE_VERSION .
+            - $(aws ecr get-login --no-include-email --region eu-central-1)
+            - docker push $DOCKER_REPOSITORY:$APP_VERSION-dev.$DOCKER_BRANCH.$DOCKER_IMAGE_VERSION
+          services:
+            - docker
+    release-major:
+      - step:
+          name: Release
+          image: atlassian/default-image:2
+          caches:
+            - node
+          script:
+            - cp /opt/atlassian/pipelines/agent/data/id_rsa ~/.ssh/id_rsa
+            - git remote set-url origin ${BITBUCKET_GIT_SSH_ORIGIN}
+            - git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+            - git checkout "${BITBUCKET_BRANCH:-master}"
+            - yarn install
+            - yarn release:major
+            - echo $(node -pe "require('./package.json').version") > version.txt
+            - yarn build
+          artifacts:
+            - version.txt
+            - package.json
+      - step:
+          name: Containerize
+          caches:
+            - docker
+          script:
+            - export APP_VERSION=$(cat version.txt)
+            - export DOCKER_REPOSITORY=007098893018.dkr.ecr.eu-central-1.amazonaws.com/projects-mcd
+            - docker build -t $DOCKER_REPOSITORY:$APP_VERSION . && $(aws ecr get-login --no-include-email --region eu-central-1) && docker push $DOCKER_REPOSITORY:$APP_VERSION
+          services:
+            - docker
+    release-minor:
+      - step:
+          name: Release
+          image: node:10-jessie
+          caches:
+            - node
+          script:
+            - cp /opt/atlassian/pipelines/agent/data/id_rsa ~/.ssh/id_rsa
+            - git remote set-url origin ${BITBUCKET_GIT_SSH_ORIGIN}
+            - git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+            - git checkout "${BITBUCKET_BRANCH:-master}"
+            - yarn install
+            - yarn release:minor
+            - echo $(node -pe "require('./package.json').version") > version.txt
+            - yarn build
+          artifacts:
+            - version.txt
+            - package.json
+      - step:
+          name: Containerize
+          caches:
+            - docker
+          script:
+            - export APP_VERSION=$(cat version.txt)
+            - export DOCKER_REPOSITORY=007098893018.dkr.ecr.eu-central-1.amazonaws.com/projects-mcd
+            - docker build -t $DOCKER_REPOSITORY:$APP_VERSION . && $(aws ecr get-login --no-include-email --region eu-central-1) && docker push $DOCKER_REPOSITORY:$APP_VERSION
+          services:
+            - docker
+    release-patch:
+      - step:
+          name: Release
+          image: node:10-jessie
+          caches:
+            - node
+          script:
+            - cp /opt/atlassian/pipelines/agent/data/id_rsa ~/.ssh/id_rsa
+            - git remote set-url origin ${BITBUCKET_GIT_SSH_ORIGIN}
+            - git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+            - git checkout "${BITBUCKET_BRANCH:-master}"
+            - yarn install
+            - yarn release:patch
+            - echo $(node -pe "require('./package.json').version") > version.txt
+            - yarn build
+          artifacts:
+            - version.txt
+            - package.json
+      - step:
+          name: Containerize
+          caches:
+            - docker
+          script:
+            - export APP_VERSION=$(cat version.txt)
+            - export DOCKER_REPOSITORY=007098893018.dkr.ecr.eu-central-1.amazonaws.com/projects-mcd
+            - docker build -t $DOCKER_REPOSITORY:$APP_VERSION . && $(aws ecr get-login --no-include-email --region eu-central-1) && docker push $DOCKER_REPOSITORY:$APP_VERSION
+          services:
+            - docker

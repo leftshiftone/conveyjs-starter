@@ -1,0 +1,165 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn build
+  code-analytics:
+    docker:
+      - image: circleci/node:10-browsers
+    environment:
+      TZ: "/usr/share/zoneinfo/Europe/Vienna"
+    steps:
+      - checkout
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn sonarqube
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+  dependency-updates:
+    docker:
+      - image: circleci/node:10-browsers
+    environment:
+      TZ: "/usr/share/zoneinfo/Europe/Vienna"
+    steps:
+      - checkout
+      - run: yarn add --dev ndc
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn ndc --stats --export $BUILD_STATUS_URL\?flow\=depsNdc\&repositoryName\=$CIRCLE_PROJECT_REPONAME\&repositoryBranch\=$CIRCLE_BRANCH\&buildNumber\=$CIRCLE_BUILD_NUM
+  release-major:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "cd:1d:75:5d:07:32:e4:fb:27:87:7c:16:c3:4b:2d:12"
+      - checkout
+      - run: git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+      - run: yarn cleanup-release:major
+      - run: git checkout master && git pull --tags
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn build
+      - run: npm set registry https://registry.npmjs.org/
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN\n" > .npmrc
+      - run: npm run release:major
+  release-minor:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "cd:1d:75:5d:07:32:e4:fb:27:87:7c:16:c3:4b:2d:12"
+      - checkout
+      - run: git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+      - run: yarn cleanup-release:minor
+      - run: git checkout master && git pull --tags
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn build
+      - run: npm set registry https://registry.npmjs.org/
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run: npm run release:minor
+  release-patch:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "cd:1d:75:5d:07:32:e4:fb:27:87:7c:16:c3:4b:2d:12"
+      - checkout
+      - run: yarn cleanup-release:patch
+      - run: git config --local user.email "ci@leftshift.one" && git config --local user.name "Continuous Integration"
+      - restore_cache:
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: cache-node-{{ checksum "package.json" }}
+      - run: yarn build
+      - run: npm set registry https://registry.npmjs.org/
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run: npm run release:patch
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+  release-major:
+    jobs:
+      - release-major:
+          context: npm
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release-major$/
+  release-minor:
+    jobs:
+      - release-minor:
+          context: npm
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release-minor$/
+  release-patch:
+    jobs:
+      - release-patch:
+          context: npm
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^release-patch$/
+  code-analytics:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - code-analytics:
+          context: leftshiftone-sonar
+  dependency-updates:
+    triggers:
+      - schedule:
+          cron: "0 1 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - dependency-updates:
+          context: leftshiftone-sonar
