@@ -1,0 +1,19 @@
+.footer {
+    z-index: 3;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    color: #424242;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 990px),(max-height: 680px) {
+    .footer {
+        height: 20px !important;
+    }
+}
