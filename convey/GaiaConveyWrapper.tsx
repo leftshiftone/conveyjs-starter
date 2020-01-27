@@ -16,6 +16,10 @@ import {
     IListener
 } from "@leftshiftone/convey";
 
+import handlers from '@handler/Handlers';
+
+import {TextMessage} from "@convey/model/text/TextMessage";
+
 class Listener implements IListener {
     private emitter = null as Emitter | null;
 
@@ -89,6 +93,8 @@ export class GaiaConveyWrapper {
             .then((connection: MqttConnection) => {
                 connection.subscribe(ChannelType.TEXT, (data: object) => this.emitter.emit(GAIA_LISTENER.TEXT, data));
                 connection.subscribe(ChannelType.CONTEXT, (data: object) => this.emitter.emit(GAIA_LISTENER.CONTEXT, data));
+
+                connection.subscribe(ChannelType.NOTIFICATION, handlers.notification);
 
                 connection.reception(GaiaConveyWrapper.getReceptionMessage());
                 listener.setEmitter(this.emitter);

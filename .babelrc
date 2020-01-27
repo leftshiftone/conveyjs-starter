@@ -20,6 +20,7 @@
           "@components": "./components",
           "@convey" : "./convey",
           "@environment" : "./environment",
+          "@handler" : "./handler",
           "@layout": "./layout",
           "@lib": "./lib"
         }
