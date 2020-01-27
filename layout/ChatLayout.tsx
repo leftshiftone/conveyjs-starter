@@ -1,33 +1,29 @@
 import React, {ReactNodeArray} from 'react';
 import Head from "next/head";
 
-import {Col, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink, Row} from "reactstrap";
+import {
+    Col,
+    Row,
+    Container
+} from "reactstrap";
+
 import Footer from './footer/Footer';
+import Header from './header/Header';
 
 import "./ChatLayout.css"
 
 export default function(props : IProps) {
     return (
         <div>
-            {/*
             <Head>
-                <title>{this.props.title}</title>
+                <title>{props.title}</title>
             </Head>
-            */}
-            <div>
-                <Row>
-                    <Navbar color="light" light expand="lg">
-                        <NavbarBrand href="/"><img src="/static/lso_mini.png" width="55px"/></NavbarBrand>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink href="https://github.com/leftshiftone/conveyjs-starter">
-                                    conveyjs starter
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Navbar>
-                </Row>
-            </div>
+            <Header
+                img={"/static/lso_mini.png"}
+                imgWidth={"55px"}
+                link={"https://github.com/leftshiftone/conveyjs-starter"}
+                linkLabel={"conveyjs starter"}
+            />
             <Container>
                 <Row>
                     <Col lg={2}>
