@@ -16,7 +16,7 @@ import Login from './Login';
 
 import "./ChatLayout.css"
 
-export default function(props : IProps) {
+export default function(props: IProps) {
     const [ loggedIn, setLoggedIn ] = useState(false);
 
     return (
@@ -58,6 +58,6 @@ export default function(props : IProps) {
 }
 
 interface IProps {
-    title    : string
-    children : ReactNodeArray
+    title: string
+    children: ReactNodeArray
 }

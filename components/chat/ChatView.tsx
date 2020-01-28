@@ -9,7 +9,6 @@ import {
     GAIA_LISTENER,
     CONVEY_EVENT
 } from "@environment/Identifier";
-
 import { EnvironmentLoader } from "@environment/EnvironmentLoader";
 
 import { EmitterAware } from "@lib/emitter/Emitter";
@@ -22,13 +21,11 @@ import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
 
 import ChatContent from "@components/chat/ChatContent";
 
-import {
-    Spinner
-} from '@bootstrap/all';
+import { Spinner } from '@bootstrap/all';
 
 import './ChatView.css';
 
-export default function(props : EmitterAware) {
+export default function(props: EmitterAware) {
     const [ connectionState, setConnectionState ] = useState(CONNECTION_STATE.CONNECTING);
 
     /**
@@ -42,14 +39,12 @@ export default function(props : EmitterAware) {
             props.emitter.removeAllListeners(GAIA_LISTENER.CONTEXT);
             connect();
         });
-
-        // DOCU: Add custom listeners (e.g. for navigation tabs)
     }, []);
 
     async function connect() {
         setConnectionState(CONNECTION_STATE.CONNECTING);
 
-        props.emitter.addListener(GAIA_LISTENER.TEXT, (args : TextMessage) => {
+        props.emitter.addListener(GAIA_LISTENER.TEXT, (args: TextMessage) => {
             setLoaded(); // disable loading indicator after received message
             props.emitter.emit(CONVEY_EVENT.ON_TEXT_MESSAGE, unpack(args));
         });
@@ -94,7 +89,7 @@ export default function(props : EmitterAware) {
                 return <div/>;
             case CONNECTION_STATE.CONNECTING:
                 return <Spinner/>;
-            default :
+            default:
                 return (
                     <div className="disconnected-container">
                         <h1 className="disconnected-logo">

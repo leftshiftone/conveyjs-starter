@@ -9,7 +9,7 @@ import {
 
 import './Login.css';
 
-export default function(props : IProps) {
+export default function(props: IProps) {
     function doLogin() {
         props.updateLogin(true);
     }
@@ -36,5 +36,5 @@ export default function(props : IProps) {
 }
 
 interface IProps {
-    updateLogin : (value : boolean) => void
+    updateLogin: (value : boolean) => void
 }

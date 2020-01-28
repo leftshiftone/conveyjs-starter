@@ -16,23 +16,23 @@ import Template from "@components/custom/Template";
  * @since 0.1.0
  */
 export class CustomRenderer {
-    public static render(message : TextMessage[], emitter : Emitter) {
+    public static render(message: TextMessage[], emitter: Emitter) {
         if (!message) {
             return;
         }
 
-        message.forEach((message : TextMessage) => {
+        message.forEach((message: TextMessage) => {
             switch(message.class) {
                 case CustomElement.TEMPLATE:
                     CustomRenderer.doRender(message.class, <Template emitter={emitter} customClass={message.class}/>);
                     break;
-                default :
+                default:
                     break;
             }
         })
     }
 
-    private static doRender(triggerClass : string, component : ReactElement<EmitterAware>) : void {
+    private static doRender(triggerClass: string, component: ReactElement<EmitterAware>): void {
             const parent = document.querySelector(`.${triggerClass} `);
         if (!CustomRenderer.nullOrUndefined(parent)) {
             const placeHolder = document.createElement("div");
@@ -44,7 +44,7 @@ export class CustomRenderer {
         }
     }
 
-    private static nullOrUndefined(obj : any) {
+    private static nullOrUndefined(obj: any) {
         return obj === null || obj === undefined
     }
 }

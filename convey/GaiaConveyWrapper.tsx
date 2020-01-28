@@ -48,14 +48,14 @@ class Listener implements IListener {
 let listener = new Listener();
 
 export class GaiaConveyWrapper {
-    private readonly gaiaUrl    : string;
-    private readonly identityId : string;
-    private readonly emitter    : Emitter;
-    private readonly timeoutMs  : number;
+    private readonly gaiaUrl: string;
+    private readonly identityId: string;
+    private readonly emitter: Emitter;
+    private readonly timeoutMs: number;
 
-    private static INSTANCE     : GaiaConveyWrapper;
+    private static INSTANCE: GaiaConveyWrapper;
 
-    private constructor(gaiaUrl : string, identityId : string, emitter : Emitter, timeoutMs: number) {
+    private constructor(gaiaUrl: string, identityId: string, emitter: Emitter, timeoutMs: number) {
         this.gaiaUrl = gaiaUrl;
         this.identityId = identityId;
         this.emitter = emitter;
@@ -70,7 +70,7 @@ export class GaiaConveyWrapper {
         this.emitter.addListener(GAIA_ACTIONS.CLEAR, () => document.querySelector('.lto-content')!.innerHTML = '');
     }
 
-    public static init(gaiaUrl : string, identityId : string, emitter: Emitter, timeoutInMs = 5000) : GaiaConveyWrapper {
+    public static init(gaiaUrl: string, identityId: string, emitter: Emitter, timeoutInMs = 5000): GaiaConveyWrapper {
         if (!this.INSTANCE) {
             this.INSTANCE = new this(gaiaUrl, identityId, emitter, timeoutInMs);
         }
@@ -78,7 +78,7 @@ export class GaiaConveyWrapper {
         return this.INSTANCE;
     }
 
-    public doConnect() : Promise<void> {
+    public doConnect(): Promise<void> {
         return Promise.race([this.connect(), GaiaConveyWrapper.timeout(this.timeoutMs)]);
     }
 

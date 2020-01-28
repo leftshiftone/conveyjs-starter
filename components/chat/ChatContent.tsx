@@ -18,7 +18,7 @@ import { CustomRenderer } from '@lib//renderer/CustomRenderer';
  * @author manuel.weixle@leftshift.one
  * @since 0.1.0
  */
-export default function(props : EmitterAware) {
+export default function(props: EmitterAware) {
     const content = useRef(null);
 
     useEffect(() => {
