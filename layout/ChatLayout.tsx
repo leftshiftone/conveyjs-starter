@@ -1,4 +1,7 @@
-import React, {ReactNodeArray} from 'react';
+import React, {
+    ReactNodeArray,
+    useState
+} from 'react';
 import Head from "next/head";
 
 import {
@@ -9,10 +12,13 @@ import {
 
 import Footer from './footer/Footer';
 import Header from './header/Header';
+import Login from './Login';
 
 import "./ChatLayout.css"
 
 export default function(props : IProps) {
+    const [ loggedIn, setLoggedIn ] = useState(false);
+
     return (
         <div>
             <Head>
@@ -25,15 +31,19 @@ export default function(props : IProps) {
                 linkLabel={"conveyjs starter"}
             />
             <Container>
-                <Row>
-                    <Col lg={2}>
-                    </Col>
-                    <Col lg={8}>
-                        {props.children[0] || <div/>}
-                    </Col>
-                    <Col lg={2}>
-                    </Col>
-                </Row>
+                {loggedIn ? (
+                    <Row>
+                        <Col lg={2}>
+                        </Col>
+                        <Col lg={8}>
+                            {props.children[0] || <div/>}
+                        </Col>
+                        <Col lg={2}>
+                        </Col>
+                    </Row>
+                ) : (
+                    <Login updateLogin={(value) => setLoggedIn(value)}/>
+                )}
                 <Row>
                     <Footer>
                         <div>

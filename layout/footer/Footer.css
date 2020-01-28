@@ -11,9 +11,3 @@
     flex-direction: column;
     justify-content: center;
 }
-
-@media (max-width: 990px),(max-height: 680px) {
-    .footer {
-        height: 20px !important;
-    }
-}

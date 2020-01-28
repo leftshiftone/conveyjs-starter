@@ -1,10 +1,27 @@
 import React from "react";
 import "./Header.css";
-import {Nav, Navbar, NavbarBrand, NavItem, NavLink, Row} from "reactstrap";
+
+import {
+    Nav,
+    Navbar,
+    NavbarBrand,
+    NavItem,
+    NavLink,
+    Row
+} from "reactstrap";
 
 const Header: React.FunctionComponent<Props> = (props: Props) => {
     return (
-        <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <a className="navbar-brand" href="#">
+                <img src={props.img} width={props.imgWidth}/>
+            </a>
+            <a href={props.link} className={"float-right"}>
+                {props.linkLabel}
+            </a>
+        </nav>
+        /*
+        <div className={"lto-header-container"}>
             <Row>
                 <Navbar color="light" light expand="lg">
                     <NavbarBrand href="/"><img src={props.img} width={props.imgWidth}/></NavbarBrand>
@@ -18,6 +35,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                 </Navbar>
             </Row>
         </div>
+         */
     );
 };
 

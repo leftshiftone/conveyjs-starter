@@ -18,8 +18,6 @@ import {
 
 import handlers from '@handler/Handlers';
 
-import {TextMessage} from "@convey/model/text/TextMessage";
-
 class Listener implements IListener {
     private emitter = null as Emitter | null;
 

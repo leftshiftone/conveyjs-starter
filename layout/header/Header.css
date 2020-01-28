@@ -1,0 +1,7 @@
+.lto-header-container {
+    width : calc(100vw - 20px);
+}
+
+.navbar-expand-lg {
+    justify-content: space-between !important;
+}
