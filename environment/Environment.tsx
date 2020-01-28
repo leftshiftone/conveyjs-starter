@@ -31,7 +31,7 @@ export class Environment {
             return new Environment(
                 // "ws://localhost:61616/mqtt",
                 "wss://gaia.leftshift.one/mqtt",
-                "d2a0cc18-8e97-4e87-9c4f-c1b3190844fc",
+                "",
                 "",
                 "",
                 Env.DEV
@@ -39,7 +39,6 @@ export class Environment {
         }
 
     }
-
 }
 
 export enum Env {

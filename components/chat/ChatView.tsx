@@ -54,12 +54,15 @@ export default function(props: EmitterAware) {
         });
 
         const env = await EnvironmentLoader.instance().env();
-        GaiaConveyWrapper.init(env.url, env.identityId, props.emitter)
-            .doConnect()
-            .catch((err: Error) => {
-                console.error(`could not connect to gaia: ${err}`);
-                setDisconnected();
-        });
+
+        if (env.identityId !== "" && env.url !== "") {
+            GaiaConveyWrapper.init(env.url, env.identityId, props.emitter)
+                .doConnect()
+                .catch((err: Error) => {
+                    console.error(`could not connect to gaia: ${err}`);
+                    setDisconnected();
+                });
+        }
     }
 
     /**
