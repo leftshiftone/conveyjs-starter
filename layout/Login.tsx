@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import {
     InputGroup,
     InputGroupAddon,
@@ -10,8 +11,19 @@ import {
 import './Login.css';
 
 export default function(props: IProps) {
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+
     function doLogin() {
         props.updateLogin(true);
+    }
+
+    function updateEmail(e) {
+        setEmail(e.target.value);
+    }
+
+    function updatePassword(e) {
+        setPassword(e.target.value);
     }
 
     return (
@@ -20,13 +32,17 @@ export default function(props: IProps) {
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>@</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="email" />
+                <Input onChange={updateEmail}
+                       placeholder="email"
+                />
             </InputGroup>
             <InputGroup className={"lto-login-input mb-2"}>
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>***</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="password" />
+                <Input onChange={updatePassword} type="password"
+                       placeholder="password"
+                />
             </InputGroup>
             <Button color="primary" onClick={doLogin}>
                 Login

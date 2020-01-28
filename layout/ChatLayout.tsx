@@ -35,7 +35,7 @@ export default function(props: IProps) {
                     <Row>
                         <Col lg={2}>
                         </Col>
-                        <Col lg={8}>
+                        <Col lg={8} className={"lto-content-container mt-4"}>
                             {props.children[0] || <div/>}
                         </Col>
                         <Col lg={2}>

@@ -97,6 +97,9 @@ input[type="checkbox"], :global(.lto-slider-prev), :global(.lto-slider-next) {
     padding-top: 0;
     padding-bottom: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 :global(.lto-col .lto-text) {
