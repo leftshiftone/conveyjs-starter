@@ -10,6 +10,8 @@ import {
     Container
 } from "reactstrap";
 
+import Emitter from '@lib/emitter/Emitter';
+
 import Footer from './footer/Footer';
 import Header from './header/Header';
 import Login from './Login';
@@ -42,7 +44,10 @@ export default function(props: IProps) {
                         </Col>
                     </Row>
                 ) : (
-                    <Login updateLogin={(value) => setLoggedIn(value)}/>
+                    <Login
+                        updateLogin={(value) => setLoggedIn(value)}
+                        emitter={props.emitter}
+                    />
                 )}
                 <Row>
                     <Footer>
@@ -60,4 +65,5 @@ export default function(props: IProps) {
 interface IProps {
     title: string
     children: ReactNodeArray
+    emitter: Emitter
 }

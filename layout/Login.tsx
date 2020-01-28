@@ -8,6 +8,8 @@ import {
     Button
 } from 'reactstrap';
 
+import Emitter from '@lib/emitter/Emitter';
+
 import './Login.css';
 
 export default function(props: IProps) {
@@ -53,4 +55,5 @@ export default function(props: IProps) {
 
 interface IProps {
     updateLogin: (value : boolean) => void
+    emitter: Emitter
 }
