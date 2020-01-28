@@ -31,14 +31,5 @@ export default function() {
                 </EmitterContext.Consumer>
             </Layout>
         </div>
-        /*
-        <Layout title={"conveyjs-starter"}>
-            <EmitterContext.Consumer>
-                {(emitter) => (<ChatView emitter={emitter}/>)}
-            </EmitterContext.Consumer>
-            <EmitterContext.Consumer>
-                {(_) => <div/>}
-            </EmitterContext.Consumer>
-        </Layout>*/
     )
 }
