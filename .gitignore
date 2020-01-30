@@ -5,6 +5,7 @@
 tests_output/
 cmake-build-*/
 *.iws
+*.iml
 out/
 .idea_modules/
 atlassian-ide-plugin.xml
