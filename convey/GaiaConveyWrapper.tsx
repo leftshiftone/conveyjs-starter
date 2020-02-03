@@ -7,15 +7,16 @@ import {
     ChannelType,
     Gaia,
     EventStream,
-    IListener
+    Properties
 } from "@leftshiftone/convey";
 
-import {Env} from '@environment/Environment';
+import { Env } from '@environment/Environment';
 
 import handlers from '@handler/Handlers';
 import { disableLogging } from "@handler/Logging";
 
 import { ConnectionListener } from "@convey/ConnectionListener";
+import { ConveyProperties } from "@convey/ConveyProperties";
 
 export class GaiaConveyWrapper {
     private readonly gaiaUrl: string;
@@ -38,13 +39,13 @@ export class GaiaConveyWrapper {
         return this.INSTANCE || (this.INSTANCE = new GaiaConveyWrapper(gaiaUrl, identityId))
     }
 
-    public connect(receptionMessage: object, environment: Env, emitter: Emitter, wait_timeout: number = 60000/*, properties: ConveyProperties*/) {
+    public connect(receptionMessage: object, environment: Env, emitter: Emitter, wait_timeout: number = 60000, properties: ConveyProperties) {
         let renderer = new Renderer(emitter);
         renderer.scrollStrategy = "container";
 
         new Gaia(renderer, new ConnectionListener(wait_timeout)).connect(this.gaiaUrl, this.identityId, this.username, this.password)
             .then((connection: any) => {
-                //properties.getAll.forEach((value, key) => Properties.register(key, value));
+                properties.getAll.forEach((value, key) => Properties.register(key, value));
                 if (environment == Env.DEV) {
                     connection.subscribe(ChannelType.CONTEXT, handlers.context);
                     connection.subscribe(ChannelType.LOG, handlers.log);
