@@ -1,5 +1,5 @@
 import React, {
-    ReactNodeArray,
+    ReactNodeArray, useEffect,
     useState
 } from 'react';
 import Head from "next/head";
@@ -20,6 +20,16 @@ import "./ChatLayout.css"
 
 export default function(props: IProps) {
     const [ loggedIn, setLoggedIn ] = useState(false);
+    const [ isIE, setIsIE ] = useState(true);
+
+    useEffect(() => {
+        let ie = window.navigator.userAgent.indexOf('Trident') != -1;
+        if (!ie) {
+            setIsIE(false);
+        } else {
+            alert("Bitte verwende Firefox, Chrome oder Edge");
+        }
+    }, []);
 
     return (
         <div>
@@ -33,21 +43,23 @@ export default function(props: IProps) {
                 linkLabel={"conveyjs starter"}
             />
             <Container>
-                {loggedIn ? (
-                    <Row>
-                        <Col lg={2}>
-                        </Col>
-                        <Col lg={8} className={"lto-content-container mt-4"}>
-                            {props.children[0] || <div/>}
-                        </Col>
-                        <Col lg={2}>
-                        </Col>
-                    </Row>
-                ) : (
-                    <Login
-                        updateLogin={(value) => setLoggedIn(value)}
-                        emitter={props.emitter}
-                    />
+                {!isIE && (
+                    loggedIn ? (
+                        <Row>
+                            <Col lg={2}>
+                            </Col>
+                            <Col lg={8} className={"lto-content-container mt-4"}>
+                                {props.children[0] || <div/>}
+                            </Col>
+                            <Col lg={2}>
+                            </Col>
+                        </Row>
+                    ) : (
+                        <Login
+                            updateLogin={(value) => setLoggedIn(value)}
+                            emitter={props.emitter}
+                        />
+                    )
                 )}
                 <Row>
                     <Footer>

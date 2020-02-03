@@ -28,10 +28,8 @@ import './ChatView.css';
 export default function(props: EmitterAware) {
     const [ connectionState, setConnectionState ] = useState(CONNECTION_STATE.CONNECTING);
 
-    /**
-     * Equivalent to componentDidMount
-     */
     useEffect(() => {
+
         connect();
 
         props.emitter.addListener(GAIA_LISTENER.DISCONNECTED, () => {

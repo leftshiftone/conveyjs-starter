@@ -47,12 +47,12 @@ export enum Env {
 }
 
 const from = (envString: string): Env => {
-    switch (envString) {
+    switch (envString.toUpperCase()) {
         case "DEV":
             return Env.DEV;
         case "PROD":
             return Env.PROD;
         default:
-            throw Error(`unknown env: ${envString}`)
+            throw Error(`Invalid env: ${envString}`)
     }
 };
