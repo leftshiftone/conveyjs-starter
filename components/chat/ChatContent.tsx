@@ -22,8 +22,8 @@ export default function(props: EmitterAware) {
     const content = useRef(null);
 
     useEffect(() => {
-        props.emitter.addListener(CONVEY_EVENT.ON_TEXT_MESSAGE, (textMessage: TextMessage[]) => {
-            CustomRenderer.render(textMessage, props.emitter);
+        props.emitter.addListener(CONVEY_EVENT.ON_TEXT_MESSAGE, (textMessage: TextMessage) => {
+            CustomRenderer.render(textMessage);
         });
 
         return function cleanup() {

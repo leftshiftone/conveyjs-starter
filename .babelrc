@@ -22,7 +22,8 @@
           "@environment" : "./environment",
           "@handler" : "./handler",
           "@layout": "./layout",
-          "@lib": "./lib"
+          "@lib": "./lib",
+          "@utils": "./utils"
         }
       }
     ]

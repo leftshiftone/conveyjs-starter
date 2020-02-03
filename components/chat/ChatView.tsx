@@ -5,90 +5,94 @@ import React, {
 } from 'react';
 
 import {
-    CONNECTION_STATE,
-    GAIA_LISTENER,
-    CONVEY_EVENT
-} from "@environment/Identifier";
-import { EnvironmentLoader } from "@environment/EnvironmentLoader";
+    Env,
+    GaiaUrl,
+    envWithDefaultOf
+} from '@environment/Environment';
 
 import { EmitterAware } from "@lib/emitter/Emitter";
 
-import {
-    TextMessage,
-    unpack
-} from "@convey/model/text/TextMessage";
 import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
+import { IReceptionMessage } from "@convey/model/reception/IReceptionMessage";
+import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 
 import ChatContent from "@components/chat/ChatContent";
 
 import { Spinner } from '@bootstrap/all';
 
+import { Url } from "@utils/Url";
+
 import './ChatView.css';
 
+import {
+    ConnectionListener,
+    ConnectionState
+} from "@convey/ConnectionListener";
+
 export default function(props: EmitterAware) {
-    const [ connectionState, setConnectionState ] = useState(CONNECTION_STATE.CONNECTING);
+    const [ connectionState, setConnectionState ] = useState(ConnectionState.DISCONNECTED);
+    let conveyWrapper : GaiaConveyWrapper | null = null;
 
     useEffect(() => {
+        const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
+        if (!receptionMessage) return;
 
-        connect();
+        fetch("/env.json")
+            .then(value => value.json())
+            .then(data => {
+                const url = data.gaia_url;
+                const identityId = data.gaia_identity_id;
+                const username = data.gaia_username;
+                const password = data.gaia_password;
+                const wait_timout = data.gaia_wait_timeout;
+                const environment = envWithDefaultOf(Url.getParam("env") || data.gaia_env, Env.PROD);
 
-        props.emitter.addListener(GAIA_LISTENER.DISCONNECTED, () => {
-            props.emitter.removeAllListeners(GAIA_LISTENER.TEXT);
-            props.emitter.removeAllListeners(GAIA_LISTENER.CONTEXT);
-            connect();
+                connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout)/*, properties*/);
+            }).catch(reason => {
+            console.warn(`Unable to retrieve environment: ${reason}`);
+            connect(GaiaUrl.BETA,
+                "d2a0cc18-8e97-4e87-9c4f-c1b3190844fc",
+                receptionMessage, Env.DEV,
+                null,
+                null,
+                60000/*,
+                properties*/);
         });
+
+        return(() => {
+            conveyWrapper && conveyWrapper.disconnect();
+        })
     }, []);
 
-    async function connect() {
-        setConnectionState(CONNECTION_STATE.CONNECTING);
+    useEffect(() => {
+        setLoadingState(ConnectionListener.STATE);
+    },[ConnectionListener.STATE]);
 
-        props.emitter.addListener(GAIA_LISTENER.TEXT, (args: TextMessage) => {
-            setLoaded(); // disable loading indicator after received message
-            props.emitter.emit(CONVEY_EVENT.ON_TEXT_MESSAGE, unpack(args));
-        });
+    function connect(gaiaUrl: string,
+                    gaiaIdentityId: string,
+                    receptionPayload: object,
+                    environment: Env,
+                    username: string | null = null,
+                    password: string | null = null,
+                    wait_timeout: number | null = null,
+                    /*properties: ConveyProperties*/) {
 
-        props.emitter.addListener(GAIA_LISTENER.CONTEXT, (args) => {
-            props.emitter.emit(CONVEY_EVENT.ON_CONTEXT_MESSAGE, args);
-        });
+        conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
+        conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000/*, properties*/);
+    }
 
-        const env = await EnvironmentLoader.instance().env();
-
-        if (env.identityId !== "" && env.url !== "") {
-            GaiaConveyWrapper.init(env.url, env.identityId, props.emitter)
-                .doConnect()
-                .catch((err: Error) => {
-                    console.error(`could not connect to gaia: ${err}`);
-                    setDisconnected();
-                });
-        }
+    function setLoadingState(state : number) {
+        setConnectionState(state);
     }
 
     /**
-     * Disable loading indicator
-     */
-    function setLoaded() {
-        if (connectionState === CONNECTION_STATE.CONNECTING ||
-            connectionState === CONNECTION_STATE.DISCONNECTED) {
-            setConnectionState(CONNECTION_STATE.CONNECTED);
-        }
-    }
-
-    /**
-     * Sets the internal state to {@link CONNECTION_STATE#DISCONNECTED} if the connection
-     * could not be established
-     */
-    function setDisconnected() {
-        setConnectionState(CONNECTION_STATE.DISCONNECTED);
-    }
-
-    /**
-     * Returns the content of the chat window depending on the {@link CONNECTION_STATE}
+     * Returns the content of the chat window depending on the {@link ConnectionState}
      */
     function renderConnectionState(): ReactNode {
         switch (connectionState) {
-            case CONNECTION_STATE.CONNECTED:
+            case ConnectionState.CONNECTED:
                 return <div/>;
-            case CONNECTION_STATE.CONNECTING:
+            case ConnectionState.DISCONNECTED:
                 return <Spinner/>;
             default:
                 return (

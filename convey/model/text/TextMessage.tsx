@@ -5,7 +5,10 @@ export const unpack = (message: TextMessage): TextMessage[] => {
 };
 
 export interface TextMessage {
+    parent?:    TextMessage;
     elements?:  TextMessage[];
+    id?:        string;
+    text?:      string;
     class?:     string;
     qualifier?: string;
     value:      string;
