@@ -1,7 +1,5 @@
 import React, {
-    ReactNode,
-    useEffect,
-    useState
+    useEffect
 } from 'react';
 
 import {
@@ -15,22 +13,16 @@ import { EmitterAware } from "@lib/emitter/Emitter";
 import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
 import { IReceptionMessage } from "@convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
-import {
-    ConnectionListener,
-    ConnectionState
-} from "@convey/ConnectionListener";
+
 import { ConveyProperties } from "@convey/ConveyProperties";
 
 import ChatContent from "@components/chat/ChatContent";
-
-import { Spinner } from '@bootstrap/all';
 
 import { Url } from "@utils/Url";
 
 import './ChatView.css';
 
 export default function(props: EmitterAware) {
-    const [ connectionState, setConnectionState ] = useState(ConnectionState.DISCONNECTED);
     let conveyWrapper : GaiaConveyWrapper | null = null;
 
     useEffect(() => {
@@ -67,10 +59,6 @@ export default function(props: EmitterAware) {
         })
     }, []);
 
-    useEffect(() => {
-        setLoadingState(ConnectionListener.STATE);
-    },[ConnectionListener.STATE]);
-
     function connect(gaiaUrl: string,
                     gaiaIdentityId: string,
                     receptionPayload: object,
@@ -84,37 +72,8 @@ export default function(props: EmitterAware) {
         conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
     }
 
-    function setLoadingState(state : number) {
-        setConnectionState(state);
-    }
-
-    /**
-     * Returns the content of the chat window depending on the {@link ConnectionState}
-     */
-    function renderConnectionState(): ReactNode {
-        switch (connectionState) {
-            case ConnectionState.CONNECTED:
-                return <div/>;
-            case ConnectionState.DISCONNECTED:
-                return <Spinner/>;
-            default:
-                return (
-                    <div className="disconnected-container">
-                        <h1 className="disconnected-logo">
-                            <i className="fas fa-dizzy"/>
-                            oops
-                        </h1>
-                        <small>
-                            could not connect to GAIA
-                        </small>
-                    </div>
-                );
-        }
-    }
-
     return (
         <div>
-            {renderConnectionState()}
             <ChatContent emitter={props.emitter}/>
         </div>
     )
