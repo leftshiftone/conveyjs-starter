@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rm -r node_modules && rm -r .next && yarn -i",
     "dev": "next",
-    "build": "yarn clean && next build",
+    "build": "next build",
     "start": "next start",
     "test": "cypress open",
     "test:e2e": "cypress run",
