@@ -1,14 +1,15 @@
 {
   "name": "conveyjs-starter",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -r node_modules && rm -r .next",
     "dev": "next",
-    "build": "next build",
+    "build": "yarn clean && yarn -i && next build",
     "start": "next start",
     "test": "cypress open",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run",
+    "test:unit": "jest"
   },
   "dependencies": {
     "@leftshiftone/convey": "^1.2.0",
@@ -24,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
+    "@types/jest": "^25.1.1",
     "@types/next": "^9.0.0",
     "@types/node": "^13.1.7",
     "@types/react": "^16.9.17",
@@ -32,10 +33,16 @@
     "@types/styled-jsx": "^2.2.8",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "babel-jest": "^25.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "cypress": "^3.8.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.1.0",
     "node-sass": "^4.13.0",
     "reactstrap": "^8.4.0",
+    "ts-jest": "^25.2.0",
     "typescript": "^3.7.4",
     "webpack": "^4.41.5"
   }
