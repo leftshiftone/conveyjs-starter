@@ -73,8 +73,6 @@ export class ConnectionListener implements IListener {
     public onConnectionLost(): void {
         ConnectionListener.STATE = ConnectionState.CONNECTION_LOST;
         console.debug("ConnectionListener::ConnectionLost");
-        const content = document.getElementsByClassName("lto-content").item(0)!;
-        ConnectionListener.showErrorOverlay(window, document, location, content, "VERBINDUNG ZUM INTERNET VERLOREN", "connection");
     }
 
     static showErrorOverlay(window: Window,
