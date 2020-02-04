@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -r node_modules && rm -r .next",
+    "clean": "rm -r node_modules && rm -r .next && yarn -i",
     "dev": "next",
-    "build": "yarn clean && yarn -i && next build",
+    "build": "yarn clean && next build",
     "start": "next start",
     "test": "cypress open",
     "test:e2e": "cypress run",
@@ -44,7 +44,6 @@
     "node-sass": "^4.13.0",
     "reactstrap": "^8.4.0",
     "ts-jest": "^25.2.0",
-    "typescript": "^3.7.4",
-    "webpack": "^4.41.5"
+    "typescript": "^3.7.4"
   }
 }
