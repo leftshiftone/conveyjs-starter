@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -r node_modules && rm -r .next && yarn -i",
+    "clean": "rm -r node_modules && rm -r .next",
     "dev": "next",
     "build": "next build",
     "start": "next start",
