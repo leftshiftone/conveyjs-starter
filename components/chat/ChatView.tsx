@@ -1,5 +1,5 @@
 import React, {
-    useEffect
+    useEffect, useState
 } from 'react';
 
 import {
@@ -24,8 +24,11 @@ import { Url } from "@utils/Url";
 
 import './ChatView.css';
 
+import Template from "@components/custom/Template";
+
 export default function(props: EmitterAware) {
     let conveyWrapper : GaiaConveyWrapper | null = null;
+    const [ connectable, setConnectable ] = useState(false);
 
     useEffect(() => {
         const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
@@ -48,7 +51,7 @@ export default function(props: EmitterAware) {
             }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
             connect(GaiaUrl.BETA,
-                "d2a0cc18-8e97-4e87-9c4f-c1b3190844fc",
+                "",
                 receptionMessage, Env.DEV,
                 null,
                 null,
@@ -70,14 +73,23 @@ export default function(props: EmitterAware) {
                     password: string | null = null,
                     wait_timeout: number | null = null,
                     properties: ConveyProperties) {
-        conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
-        conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
+        if (gaiaUrl && gaiaIdentityId) {
+            conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
+            conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
+            setConnectable(true);
+        } else {
+            setConnectable(false);
+        }
     }
 
     return (
-        <div>
-            <ConnectionModal/>
-            <ChatContent emitter={props.emitter}/>
-        </div>
+        connectable ? (
+            <div>
+                <ConnectionModal/>
+                <ChatContent emitter={props.emitter}/>
+            </div>
+        ) : (
+            <Template/>
+        )
     )
 }

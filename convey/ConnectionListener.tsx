@@ -27,6 +27,7 @@ export class ConnectionListener implements IListener {
 
     constructor(waiting_for_message_timeout: number) {
         this.waiting_for_message_timeout = waiting_for_message_timeout || -1;
+
         ConnectionListener.updateConState(ConnectionState.CONNECTED);
     }
 
@@ -44,7 +45,7 @@ export class ConnectionListener implements IListener {
     public onDisconnected(): void {
         ConnectionListener.STATE = ConnectionState.DISCONNECTED;
         console.debug("ConnectionListener::Disconnected");
-        
+
         ConnectionListener.updateConState(ConnectionState.DISCONNECTED);
     }
 
