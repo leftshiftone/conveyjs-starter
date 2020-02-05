@@ -10,13 +10,15 @@ import {
 
 import { EmitterAware } from "@lib/emitter/Emitter";
 
-import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
 import { IReceptionMessage } from "@convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 
+import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
 import { ConveyProperties } from "@convey/ConveyProperties";
 
 import ChatContent from "@components/chat/ChatContent";
+
+import ConnectionModal from "@components/modal/ConnectionModal";
 
 import { Url } from "@utils/Url";
 
@@ -67,7 +69,6 @@ export default function(props: EmitterAware) {
                     password: string | null = null,
                     wait_timeout: number | null = null,
                     properties: ConveyProperties) {
-
         conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
         conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
     }
@@ -75,6 +76,7 @@ export default function(props: EmitterAware) {
     return (
         <div>
             <ChatContent emitter={props.emitter}/>
+            <ConnectionModal/>
         </div>
     )
 }

@@ -10,28 +10,40 @@ import React from "react";
 export enum ConnectionState {
     CONNECTED,
     DISCONNECTED,
-    CONNECTION_LOST
+    CONNECTION_LOST,
+    TIMEOUT,
+    BAD_CONNECTION
 }
+
+import { Subject } from 'rxjs';
 
 export class ConnectionListener implements IListener {
     public static STATE: ConnectionState = ConnectionState.CONNECTED;
     public static MESSAGE_HASH: string = "";
     public static WAITING_FOR_MESSAGE_IN_MILLIS: number = 0;
+    public static ConState = new Subject<ConnectionState>();
 
     private readonly waiting_for_message_timeout: number;
 
     constructor(waiting_for_message_timeout: number) {
         this.waiting_for_message_timeout = waiting_for_message_timeout || -1;
+        ConnectionListener.updateConState(ConnectionState.CONNECTED);
+    }
+
+    private static updateConState(newState : ConnectionState) {
+        this.ConState.next(newState);
     }
 
     public onConnected(): void {
         ConnectionListener.STATE = ConnectionState.CONNECTED;
         console.debug("ConnectionListener::Connected");
+        ConnectionListener.updateConState(ConnectionState.CONNECTED);
     }
 
     public onDisconnected(): void {
         ConnectionListener.STATE = ConnectionState.DISCONNECTED;
         console.debug("ConnectionListener::Disconnected");
+        ConnectionListener.updateConState(ConnectionState.DISCONNECTED);
     }
 
     public onError(error: string): void {
@@ -51,13 +63,12 @@ export class ConnectionListener implements IListener {
         console.debug("Received message type", messageType);
 
         if (messageType == "publish") {
-            const content = document.getElementsByClassName("lto-content").item(0)!;
             if (ConnectionListener.STATE === ConnectionState.CONNECTED) {
                 const messageHash = Md5.hashStr(`${packet.topic}_${packet.payload}}`) as string;
                 if (this.waiting_for_message_timeout >= 0) {
                     setTimeout(() => {
                         if (ConnectionListener.WAITING_FOR_MESSAGE_IN_MILLIS != 0 && ConnectionListener.MESSAGE_HASH == messageHash) {
-                            ConnectionListener.showErrorOverlay(window, document, location, content, "OOPS, DAS HAT WOHL ETWAS ZU LANGE GEDAUERT!", "timeout");
+                            ConnectionListener.updateConState(ConnectionState.TIMEOUT);
                         }
                     }, this.waiting_for_message_timeout);
                 }
@@ -66,69 +77,14 @@ export class ConnectionListener implements IListener {
                 return
             }
 
-            ConnectionListener.showErrorOverlay(window, document, location, content, "SCHLECHTE INTERNET VERBINDUNG?", "connection");
+            ConnectionListener.updateConState(ConnectionState.BAD_CONNECTION);
         }
     }
 
     public onConnectionLost(): void {
         ConnectionListener.STATE = ConnectionState.CONNECTION_LOST;
         console.debug("ConnectionListener::ConnectionLost");
-    }
 
-    static showErrorOverlay(window: Window,
-                            document: Document,
-                            location: Location,
-                            content: Element,
-                            message: string,
-                            errorType: "connection" | "timeout" | "general") {
-        const block = document.createElement("div");
-        block.classList.add("lto-block", "error");
-
-        const errorContainer = document.createElement("div");
-        errorContainer.classList.add("lto-error-container");
-
-        const overlays = document.createElement("div");
-        overlays.classList.add("lto-overlays");
-        const overlay = document.createElement("div");
-        overlay.classList.add("lto-overlay");
-
-        const closeButton = document.createElement("div");
-        closeButton.className = "lto-close-overlay";
-        overlay.appendChild(closeButton);
-
-        closeButton.addEventListener("click", () => {
-            if(block.parentElement && block.parentElement.classList.contains("lto-container")) {
-                block.parentElement.remove();
-            } else {
-                block.remove();
-            }
-        }, {once: true});
-
-        const errorImg = document.createElement("div");
-        errorImg.classList.add(`lto-${errorType}-error`);
-
-        const text = document.createElement("div");
-        text.classList.add("lto-text");
-        const buttonDiv = document.createElement("div");
-        const button = document.createElement("button");
-        button.classList.add("lto-button");
-
-        text.textContent = message;
-
-        button.innerText = "SEITE NEU LADEN";
-        button.onclick = () => location.reload();
-
-        errorContainer.append(errorImg);
-        errorContainer.append(text);
-        buttonDiv.append(button);
-        errorContainer.append(buttonDiv);
-        overlay.append(errorContainer);
-        overlay.append(closeButton);
-        overlays.append(overlay);
-        block.append(overlays);
-        content.append(block);
-
-        window.onbeforeunload = () => {
-        };
+        ConnectionListener.updateConState(ConnectionState.CONNECTION_LOST);
     }
 }
