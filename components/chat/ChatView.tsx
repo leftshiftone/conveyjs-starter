@@ -56,6 +56,7 @@ export default function(props: EmitterAware) {
                 properties);
         });
 
+        // clean-up on unmount
         return(() => {
             conveyWrapper && conveyWrapper.disconnect();
         })
@@ -75,8 +76,8 @@ export default function(props: EmitterAware) {
 
     return (
         <div>
-            <ChatContent emitter={props.emitter}/>
             <ConnectionModal/>
+            <ChatContent emitter={props.emitter}/>
         </div>
     )
 }

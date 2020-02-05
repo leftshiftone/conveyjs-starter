@@ -17,7 +17,7 @@ import {
 } from "@convey/ConnectionListener";
 
 import { interval } from "rxjs";
-import {timeout} from "rxjs/operators";
+import { timeout } from "rxjs/operators";
 
 const initError = {
     title : "",
@@ -30,14 +30,16 @@ export default function() {
     const [ error, setError ] = useState<ErrorObject>(initError);
 
     const toggle = () => setModal(!modal);
-    const seconds = interval(5000);
-    let secondsSub;
+    const connectionLost = interval(5000);
 
+    let connectionLostSub;
     let ConState = ConnectionListener.ConState.asObservable();
+
     const subscription = ConState.subscribe(data => {
         switch (data) {
             case ConnectionState.CONNECTION_LOST:
-                secondsSub = seconds.pipe(timeout(5100)).subscribe(value => {
+                // Wait 5 seconds in case reconnect is successful
+                connectionLostSub = connectionLost.pipe(timeout(5100)).subscribe(value => {
                     setError({
                         title : "Verbindung verloren",
                         message : "Versuche Verbindung neu aufzubauen!",
@@ -69,8 +71,8 @@ export default function() {
                 break;
             default : // ConnectionState.CONNECTED
                 setModal(false);
-                if (secondsSub) {
-                    secondsSub.unsubscribe();
+                if (connectionLostSub) {
+                    connectionLostSub.unsubscribe();
                 }
                 setError(initError);
                 return;
@@ -79,9 +81,13 @@ export default function() {
         setModal(true);
     });
 
+    // clean-up on unmount
     useEffect(() => {
         return(() => {
             subscription.unsubscribe();
+            if (connectionLostSub) {
+                connectionLostSub.unsubscribe();
+            }
         })
     }, []);
 

@@ -1,4 +1,4 @@
-import {Md5} from "ts-md5";
+import { Md5 } from "ts-md5";
 
 import {
     IListener,
@@ -37,12 +37,14 @@ export class ConnectionListener implements IListener {
     public onConnected(): void {
         ConnectionListener.STATE = ConnectionState.CONNECTED;
         console.debug("ConnectionListener::Connected");
+
         ConnectionListener.updateConState(ConnectionState.CONNECTED);
     }
 
     public onDisconnected(): void {
         ConnectionListener.STATE = ConnectionState.DISCONNECTED;
         console.debug("ConnectionListener::Disconnected");
+        
         ConnectionListener.updateConState(ConnectionState.DISCONNECTED);
     }
 
