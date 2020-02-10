@@ -1,34 +1,28 @@
-import React, {
-    useEffect, useState
-} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {
-    Env,
-    GaiaUrl,
-    envWithDefaultOf
-} from '@environment/Environment';
+import {Env, envWithDefaultOf, GaiaUrl} from '@environment/Environment';
 
-import { EmitterAware } from "@lib/emitter/Emitter";
+import {EmitterAware} from "@lib/emitter/Emitter";
 
-import { IReceptionMessage } from "@convey/model/reception/IReceptionMessage";
+import {IReceptionMessage} from "@convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 
-import { GaiaConveyWrapper } from "@convey/GaiaConveyWrapper";
-import { ConveyProperties } from "@convey/ConveyProperties";
+import {GaiaConveyWrapper} from "@convey/GaiaConveyWrapper";
+import {ConveyProperties} from "@convey/ConveyProperties";
 
 import ChatContent from "@components/chat/ChatContent";
 
 import ConnectionModal from "@components/modal/ConnectionModal";
 
-import { Url } from "@utils/Url";
+import {Url} from "@utils/Url";
 
 import './ChatView.css';
 
 import Template from "@components/custom/Template";
 
-export default function(props: EmitterAware) {
-    let conveyWrapper : GaiaConveyWrapper | null = null;
-    const [ connectable, setConnectable ] = useState(false);
+export default function (props: EmitterAware) {
+    let conveyWrapper: GaiaConveyWrapper | null = null;
+    const [connectable, setConnectable] = useState(false);
 
     useEffect(() => {
         const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
@@ -50,7 +44,7 @@ export default function(props: EmitterAware) {
                 connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout), properties);
             }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
-            connect(GaiaUrl.BETA,
+            connect(GaiaUrl.LOCAL,
                 "",
                 receptionMessage, Env.DEV,
                 null,
@@ -60,19 +54,19 @@ export default function(props: EmitterAware) {
         });
 
         // clean-up on unmount
-        return(() => {
+        return (() => {
             conveyWrapper && conveyWrapper.disconnect();
         })
     }, []);
 
     function connect(gaiaUrl: string,
-                    gaiaIdentityId: string,
-                    receptionPayload: object,
-                    environment: Env,
-                    username: string | null = null,
-                    password: string | null = null,
-                    wait_timeout: number | null = null,
-                    properties: ConveyProperties) {
+                     gaiaIdentityId: string,
+                     receptionPayload: object,
+                     environment: Env,
+                     username: string | null = null,
+                     password: string | null = null,
+                     wait_timeout: number | null = null,
+                     properties: ConveyProperties) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
             conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);

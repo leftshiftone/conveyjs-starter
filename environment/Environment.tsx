@@ -27,5 +27,4 @@ export function envWithDefaultOf(input: string, defaultEnv: Env): Env {
 
 export enum GaiaUrl {
     LOCAL = "ws://localhost:61616/mqtt",
-    BETA = "wss://beta.gaia.leftshift.one/mqtt",
 }
