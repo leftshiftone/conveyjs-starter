@@ -13,7 +13,7 @@ It is generally recommended to keep track of changes when cloning this repositor
 ### Custom with tracked origin
  - Initialize a new repository `git init my-project`
  - Add this repository as an remote `git remote add starter git@github.com:leftshiftone/conveyjs-starter.git`
- - List remotes `git remove -v`
+ - List remotes `git remote -v`
  - Pull this repository for changes `git pull starter master`
  
 ## First run
