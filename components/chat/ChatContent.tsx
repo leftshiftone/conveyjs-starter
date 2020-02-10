@@ -1,15 +1,12 @@
-import React, {
-    useEffect,
-    useRef
-} from "react";
+import React, {useEffect, useRef} from "react";
 
 import "./ChatContent.css";
 
-import { EmitterAware } from "@lib//emitter/Emitter";
-import { CONVEY_EVENT } from "@environment/Identifier";
-import { TextMessage } from "@convey/model/text/TextMessage";
+import {EmitterAware} from "@lib//emitter/Emitter";
+import {CONVEY_EVENT} from "@environment/Identifier";
+import {TextMessage} from "@convey/model/text/TextMessage";
 
-import { CustomRenderer } from '@lib//renderer/CustomRenderer';
+import {CustomRenderer} from '@lib//renderer/CustomRenderer';
 
 /**
  * Renders the actual GAIA responses alias Conversational UI
@@ -18,7 +15,7 @@ import { CustomRenderer } from '@lib//renderer/CustomRenderer';
  * @author manuel.weixle@leftshift.one
  * @since 0.1.0
  */
-export default function(props: EmitterAware) {
+export default function (props: EmitterAware) {
     const content = useRef(null);
 
     useEffect(() => {
@@ -33,15 +30,15 @@ export default function(props: EmitterAware) {
     }, []);
 
     return (
-        <div className="lto-gaia">
-            <div id="lto-content-wrapper" className="lto-content"/>
-            <div ref={content} className="chat-content"/>
-            <div className="lto-suggest"/>
+            <div className="lto-gaia">
+                <div id="lto-content-wrapper" className="lto-content"/>
+                <div ref={content} className="chat-content"/>
+                <div className="lto-suggest"/>
 
-            <div style={{display: "none"}}>
-                <input type="text" className="lto-textbox"/>
-                <button className="lto-invoker"/>
+                <div style={{display: "none"}}>
+                    <input type="text" className="lto-textbox"/>
+                    <button className="lto-invoker"/>
+                </div>
             </div>
-        </div>
     )
 }

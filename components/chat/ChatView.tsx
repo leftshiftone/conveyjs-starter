@@ -32,25 +32,25 @@ export default function (props: EmitterAware) {
         properties.set("Template_Property", "template");
 
         fetch("/env.json")
-            .then(value => value.json())
-            .then(data => {
-                const url = data.gaia_url;
-                const identityId = data.gaia_identity_id;
-                const username = data.gaia_username;
-                const password = data.gaia_password;
-                const wait_timout = data.gaia_wait_timeout;
-                const environment = envWithDefaultOf(Url.getParam("env") || data.gaia_env, Env.PROD);
+                .then(value => value.json())
+                .then(data => {
+                    const url = data.gaia_url;
+                    const identityId = data.gaia_identity_id;
+                    const username = data.gaia_username;
+                    const password = data.gaia_password;
+                    const wait_timout = data.gaia_wait_timeout;
+                    const environment = envWithDefaultOf(Url.getParam("env") || data.gaia_env, Env.PROD);
 
-                connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout), properties);
-            }).catch(reason => {
+                    connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout), properties);
+                }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
             connect(GaiaUrl.LOCAL,
-                "",
-                receptionMessage, Env.DEV,
-                null,
-                null,
-                60000,
-                properties);
+                    "",
+                    receptionMessage, Env.DEV,
+                    null,
+                    null,
+                    60000,
+                    properties);
         });
 
         // clean-up on unmount
@@ -77,13 +77,13 @@ export default function (props: EmitterAware) {
     }
 
     return (
-        connectable ? (
-            <div>
-                <ConnectionModal/>
-                <ChatContent emitter={props.emitter}/>
-            </div>
-        ) : (
-            <Template/>
-        )
+            connectable ? (
+                    <div>
+                        <ConnectionModal/>
+                        <ChatContent emitter={props.emitter}/>
+                    </div>
+            ) : (
+                    <Template/>
+            )
     )
 }

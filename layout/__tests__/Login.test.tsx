@@ -1,18 +1,18 @@
 import * as React from "react";
 
 import Login from '../Login';
-import { mount, configure } from 'enzyme';
+import {configure, mount} from 'enzyme';
 
 import Adapter from 'enzyme-adapter-react-16';
 
-configure({ adapter: new Adapter() });
+configure({adapter: new Adapter()});
 
 describe('<Login /> with no props', () => {
     const login = mount(
-        <Login
-            updateLogin={() => console.log("Update Login")}
-            emitter={null}
-        />
+            <Login
+                    updateLogin={() => console.log("Update Login")}
+                    emitter={null}
+            />
     );
 
     it('should contain text input for email', () => {

@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React, {ReactElement} from "react";
 import * as ReactDOM from "react-dom";
 
-import Emitter, { EmitterAware } from "@lib/emitter/Emitter";
-import { CustomElement } from "@lib/renderer/CustomElements";
+import {EmitterAware} from "@lib/emitter/Emitter";
+import {CustomElement} from "@lib/renderer/CustomElements";
 
-import { TextMessage } from "@convey/model/text/TextMessage";
+import {TextMessage} from "@convey/model/text/TextMessage";
 
 import Template from "@components/custom/Template";
 
@@ -21,7 +21,7 @@ export class CustomRenderer {
             return;
         }
 
-        switch(message.class) {
+        switch (message.class) {
             case CustomElement.TEMPLATE:
                 CustomRenderer.doRender(message.class, <Template/>);
                 break;
@@ -31,7 +31,7 @@ export class CustomRenderer {
     }
 
     private static doRender(triggerClass: string, component: ReactElement<EmitterAware>): void {
-            const parent = document.querySelector(`.${triggerClass} `);
+        const parent = document.querySelector(`.${triggerClass} `);
         if (!CustomRenderer.nullOrUndefined(parent)) {
             const placeHolder = document.createElement("div");
             parent!.insertBefore(placeHolder, parent!.firstChild);

@@ -1,6 +1,6 @@
-import { Url } from "@utils/Url";
+import {Url} from "@utils/Url";
 //import {Browser} from "../../../utils/Browser";
-import { IReceptionMessage } from "./IReceptionMessage";
+import {IReceptionMessage} from "./IReceptionMessage";
 
 export default class ReceptionMessage {
 

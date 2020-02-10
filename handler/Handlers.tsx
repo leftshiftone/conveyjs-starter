@@ -1,5 +1,5 @@
-import { TextMessage } from "@convey/model/text/TextMessage";
-import { CustomRenderer } from "@lib/renderer/CustomRenderer";
+import {TextMessage} from "@convey/model/text/TextMessage";
+import {CustomRenderer} from "@lib/renderer/CustomRenderer";
 
 const notification = (message: any) => {
     console.debug("Notification:");

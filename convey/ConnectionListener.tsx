@@ -1,11 +1,9 @@
-import { Md5 } from "ts-md5";
+import {Md5} from "ts-md5";
 
-import {
-    IListener,
-    IPacket
-} from "@leftshiftone/convey";
+import {IListener, IPacket} from "@leftshiftone/convey";
 
 import React from "react";
+import {Subject} from 'rxjs';
 
 export enum ConnectionState {
     CONNECTED,
@@ -14,8 +12,6 @@ export enum ConnectionState {
     TIMEOUT,
     BAD_CONNECTION
 }
-
-import { Subject } from 'rxjs';
 
 export class ConnectionListener implements IListener {
     public static STATE: ConnectionState = ConnectionState.CONNECTED;
@@ -31,7 +27,7 @@ export class ConnectionListener implements IListener {
         ConnectionListener.updateConState(ConnectionState.CONNECTED);
     }
 
-    private static updateConState(newState : ConnectionState) {
+    private static updateConState(newState: ConnectionState) {
         this.ConState.next(newState);
     }
 

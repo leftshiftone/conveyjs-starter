@@ -8,26 +8,26 @@
     left: 0;
     z-index: 3;
 
-    display : flex;
-    flex-direction : column;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 .input-group-text {
-    width : 50px !important;
+    width: 50px !important;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .lto-login-input {
-    width : 500px !important;
+    width: 500px !important;
 }
 
 @media (max-width: 515px) {
     .lto-login-input {
-        width : 300px !important;
+        width: 300px !important;
     }
 
     .input-group-text {

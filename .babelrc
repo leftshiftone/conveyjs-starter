@@ -14,13 +14,15 @@
     [
       "module-resolver",
       {
-        "root": ["./"],
+        "root": [
+          "./"
+        ],
         "alias": {
           "@bootstrap": "./bootstrap",
           "@components": "./components",
-          "@convey" : "./convey",
-          "@environment" : "./environment",
-          "@handler" : "./handler",
+          "@convey": "./convey",
+          "@environment": "./environment",
+          "@handler": "./handler",
           "@layout": "./layout",
           "@lib": "./lib",
           "@utils": "./utils"
