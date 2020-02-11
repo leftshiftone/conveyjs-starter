@@ -7,7 +7,7 @@ import {EmitterAware} from "@lib/emitter/Emitter";
 import {IReceptionMessage} from "@convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 
-import {GaiaConveyWrapper} from "@convey/GaiaConveyWrapper";
+import {ConveyWrapper} from "@convey/ConveyWrapper";
 import {ConveyProperties} from "@convey/ConveyProperties";
 
 import ChatContent from "@components/chat/ChatContent";
@@ -21,14 +21,14 @@ import './ChatView.css';
 import Template from "@components/custom/Template";
 
 export default function (props: EmitterAware) {
-    let conveyWrapper: GaiaConveyWrapper | null = null;
+    let conveyWrapper: ConveyWrapper | null = null;
     const [connectable, setConnectable] = useState(false);
 
     useEffect(() => {
         const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
         if (!receptionMessage) return;
-        const properties = new ConveyProperties();
 
+        const properties = new ConveyProperties();
         properties.set("Template_Property", "template");
 
         fetch("/env.json")
@@ -66,9 +66,9 @@ export default function (props: EmitterAware) {
                      username: string | null = null,
                      password: string | null = null,
                      wait_timeout: number | null = null,
-                     properties: ConveyProperties) {
+                     properties: ConveyProperties = new ConveyProperties()) {
         if (gaiaUrl && gaiaIdentityId) {
-            conveyWrapper = GaiaConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
+            conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
             conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
             setConnectable(true);
         } else {

@@ -13,8 +13,8 @@ import {disableLogging} from "@handler/Logging";
 import {ConnectionListener} from "@convey/ConnectionListener";
 import {ConveyProperties} from "@convey/ConveyProperties";
 
-export class GaiaConveyWrapper {
-    private static INSTANCE: GaiaConveyWrapper;
+export class ConveyWrapper {
+    private static INSTANCE: ConveyWrapper;
     private readonly gaiaUrl: string;
     private readonly identityId: string;
     private readonly username?: string | null;
@@ -26,11 +26,11 @@ export class GaiaConveyWrapper {
         this.identityId = identityId;
     }
 
-    public static init(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null): GaiaConveyWrapper {
+    public static init(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
         if (username || password) {
-            return this.INSTANCE || (this.INSTANCE = new GaiaConveyWrapper(gaiaUrl, identityId, username, password))
+            return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId, username, password))
         }
-        return this.INSTANCE || (this.INSTANCE = new GaiaConveyWrapper(gaiaUrl, identityId))
+        return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId))
     }
 
     public static emit(method: string, obj: object) {
