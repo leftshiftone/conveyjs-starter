@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {Env, envWithDefaultOf, GaiaUrl} from '@environment/Environment';
 
@@ -18,11 +18,8 @@ import {Url} from "@utils/Url";
 
 import './ChatView.css';
 
-import Template from "@components/custom/Template";
-
 export default function (props: EmitterAware) {
     let conveyWrapper: ConveyWrapper | null = null;
-    const [connectable, setConnectable] = useState(false);
 
     useEffect(() => {
         const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
@@ -70,20 +67,15 @@ export default function (props: EmitterAware) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
             conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
-            setConnectable(true);
         } else {
-            setConnectable(false);
+            console.error("Unable to connect to server")
         }
     }
 
     return (
-            connectable ? (
-                    <div>
-                        <ConnectionModal/>
-                        <ChatContent emitter={props.emitter}/>
-                    </div>
-            ) : (
-                    <Template/>
-            )
+            <div>
+                <ConnectionModal/>
+                <ChatContent emitter={props.emitter}/>
+            </div>
     )
 }
