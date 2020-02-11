@@ -20,7 +20,7 @@ export default function (props: IProps) {
         if (!ie) {
             setIsIE(false);
         } else {
-            alert("Bitte verwende Firefox, Chrome oder Edge");
+            alert("Please use a modern browser!");
         }
     }, []);
 
