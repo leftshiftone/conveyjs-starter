@@ -9,7 +9,7 @@ import Footer from './footer/Footer';
 import Header from './header/Header';
 import Login from './Login';
 
-import "./ChatLayout.css"
+import "./Layout.css"
 
 export default function (props: IProps) {
     const [loggedIn, setLoggedIn] = useState(false);

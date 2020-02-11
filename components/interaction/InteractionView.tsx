@@ -10,13 +10,13 @@ import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 import {ConveyWrapper} from "@convey/ConveyWrapper";
 import {ConveyProperties} from "@convey/ConveyProperties";
 
-import ChatContent from "@components/chat/ChatContent";
+import InteractionContent from "@components/interaction/InteractionContent";
 
 import ConnectionModal from "@components/modal/ConnectionModal";
 
 import {Url} from "@utils/Url";
 
-import './ChatView.css';
+import './InteractionView.css';
 
 export default function (props: EmitterAware) {
     let conveyWrapper: ConveyWrapper | null = null;
@@ -75,7 +75,7 @@ export default function (props: EmitterAware) {
     return (
             <div>
                 <ConnectionModal/>
-                <ChatContent emitter={props.emitter}/>
+                <InteractionContent emitter={props.emitter}/>
             </div>
     )
 }

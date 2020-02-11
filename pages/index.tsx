@@ -6,8 +6,8 @@ import {testStyle} from 'style/TestStyle';
 
 import _JSXStyle from 'styled-jsx/style'
 
-import ChatView from "@components/chat/ChatView";
-import Layout from '@layout/ChatLayout';
+import InteractionView from "@components/interaction/InteractionView";
+import Layout from '@layout/Layout';
 
 import {EmitterContext} from "@lib/emitter/EmitterContext";
 
@@ -23,7 +23,7 @@ export default function () {
                                     title={"conveyjs-starter"}
                                     emitter={emitter}
                             >
-                                <ChatView emitter={emitter}/>
+                                <InteractionView emitter={emitter}/>
                                 <div/>
                             </Layout>
                     )}

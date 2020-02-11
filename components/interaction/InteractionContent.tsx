@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 
-import "./ChatContent.css";
+import "./InteractionContent.css";
 
 import {EmitterAware} from "@lib//emitter/Emitter";
 import {CONVEY_EVENT} from "@environment/Identifier";
@@ -32,7 +32,7 @@ export default function (props: EmitterAware) {
     return (
             <div className="lto-gaia">
                 <div id="lto-content-wrapper" className="lto-content"/>
-                <div ref={content} className="chat-content"/>
+                <div ref={content} className="interaction-content"/>
                 <div className="lto-suggest"/>
 
                 <div style={{display: "none"}}>
