@@ -29,32 +29,32 @@ export default function () {
                 // Wait 5 seconds in case reconnect is successful
                 connectionLostSub = connectionLost.pipe(timeout(5100)).subscribe(value => {
                     setError({
-                        title: "Verbindung verloren",
-                        message: "Versuche Verbindung neu aufzubauen!",
-                        buttonLabel: "Ok"
+                        title: "Connection lost",
+                        message: "Trying to reconnect!",
+                        buttonLabel: "OK"
                     });
                     setModal(true);
                 });
                 return;
             case ConnectionState.DISCONNECTED:
                 setError({
-                    title: "Verbindung getrennt",
-                    message: "Die Verbindung wurde getrennt",
-                    buttonLabel: "Ok"
+                    title: "Disconnected from server",
+                    message: "Connection to server has been disconnected.",
+                    buttonLabel: "OK"
                 });
                 break;
             case ConnectionState.TIMEOUT:
                 setError({
-                    title: "Verbindung unterbrochen",
-                    message: "Da hat wohl etwas zu lange gedauert...",
-                    buttonLabel: "Ok"
+                    title: "Timeout",
+                    message: "A timeout occurred.",
+                    buttonLabel: "OK"
                 });
                 break;
             case ConnectionState.BAD_CONNECTION:
                 setError({
-                    title: "Schlechte Internet Verbindung",
-                    message: "Bitte überprüfen Sie Ihre Internet Verbindung",
-                    buttonLabel: "Ok"
+                    title: "Bad connection",
+                    message: "Please check your internet connectivity",
+                    buttonLabel: "OK"
                 });
                 break;
             default : // ConnectionState.CONNECTED
