@@ -44,6 +44,7 @@
     "jest": "^25.1.0",
     "node-sass": "^4.13.0",
     "reactstrap": "^8.4.0",
+    "release-it": "^12.6.1",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.4"
   }
