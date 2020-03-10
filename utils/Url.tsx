@@ -1,5 +1,4 @@
 export class Url {
-
     public static current() {
         return new URL(window.location.href);
     }
@@ -8,4 +7,7 @@ export class Url {
         return Url.current().searchParams.get(name);
     }
 
+    public static getPath() {
+        return Url.current().pathname;
+    }
 }
