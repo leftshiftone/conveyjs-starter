@@ -15,7 +15,7 @@ export default class ReceptionMessage {
             jobId: string | null = jobId;
             jobCategory: string | null = jobCategory;
             bearerId: string | null = bearerId;
-            isMobile: boolean = false//isIE() || isMobile();
+            isMobile: boolean = false//Navigator.isIE() || Navigator.isMobile();
         }
     }
 }
