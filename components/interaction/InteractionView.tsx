@@ -14,7 +14,7 @@ import InteractionContent from "@components/interaction/InteractionContent";
 
 import ConnectionModal from "@components/modal/ConnectionModal";
 
-import {Url} from "@utils/Url";
+import {Navigator} from "@leftshiftone/convey";
 
 import './InteractionView.css';
 
@@ -36,7 +36,7 @@ export default function (props: EmitterAware) {
                     const username = data.gaia_username;
                     const password = data.gaia_password;
                     const wait_timout = data.gaia_wait_timeout;
-                    const environment = envWithDefaultOf(Url.getParam("env") || data.gaia_env, Env.PROD);
+                    const environment = envWithDefaultOf(Navigator.getUrlParam("env") || data.gaia_env, Env.PROD);
 
                     connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout), properties);
                 }).catch(reason => {
