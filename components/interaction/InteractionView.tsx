@@ -8,7 +8,6 @@ import {IReceptionMessage} from "@convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
 
 import {ConveyWrapper} from "@convey/ConveyWrapper";
-import {ConveyProperties} from "@convey/ConveyProperties";
 
 import InteractionContent from "@components/interaction/InteractionContent";
 
@@ -25,9 +24,6 @@ export default function (props: EmitterAware) {
         const receptionMessage: IReceptionMessage | undefined = ReceptionMessage.get();
         if (!receptionMessage) return;
 
-        const properties = new ConveyProperties();
-        properties.set("Template_Property", "template");
-
         fetch("/env.json")
                 .then(value => value.json())
                 .then(data => {
@@ -38,7 +34,7 @@ export default function (props: EmitterAware) {
                     const wait_timout = data.gaia_wait_timeout;
                     const environment = envWithDefaultOf(Navigator.getUrlParam("env") || data.gaia_env, Env.PROD);
 
-                    connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout), properties);
+                    connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout));
                 }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
             connect(GaiaUrl.LOCAL,
@@ -46,8 +42,7 @@ export default function (props: EmitterAware) {
                     receptionMessage, Env.DEV,
                     null,
                     null,
-                    60000,
-                    properties);
+                    60000);
         });
 
         // clean-up on unmount
@@ -62,11 +57,10 @@ export default function (props: EmitterAware) {
                      environment: Env,
                      username: string | null = null,
                      password: string | null = null,
-                     wait_timeout: number | null = null,
-                     properties: ConveyProperties = new ConveyProperties()) {
+                     wait_timeout: number | null = null) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
-            conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000, properties);
+            conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000);
         } else {
             console.error("Unable to connect to server")
         }
