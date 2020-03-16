@@ -50,16 +50,7 @@ export class ConveyWrapper {
                         console.info("Logging is disabled");
                         disableLogging();
                     }
-                    connection.subscribe(ChannelType.NOTIFICATION, (message: any) => {
-                        handlers.notification(message);
-                        if (message.max_progress) {
-                            ConveyWrapper.emit("maxProgress", {maxProgress: Number(message.max_progress)});
-                        }
-                        if (message.progress) {
-                            ConveyWrapper.emit("onProgress", {progress: Number(message.progress)});
-                        }
-                    });
-
+                    connection.subscribe(ChannelType.NOTIFICATION, handlers.notification);
                     connection.subscribe(ChannelType.TEXT, handlers.text);
                     connection.reception(receptionMessage);
                     this.connection = connection;
