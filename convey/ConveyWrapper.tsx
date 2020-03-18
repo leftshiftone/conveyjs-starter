@@ -11,7 +11,6 @@ import handlers from '@handler/Handlers';
 import {disableLogging} from "@handler/Logging";
 
 import {ConnectionListener} from "@convey/ConnectionListener";
-import {ConveyProperties} from "@convey/ConveyProperties";
 
 export class ConveyWrapper {
     private static INSTANCE: ConveyWrapper;
@@ -37,13 +36,12 @@ export class ConveyWrapper {
         EventStream.emit(method, obj)
     }
 
-    public connect(receptionMessage: object, environment: Env, emitter: Emitter, wait_timeout: number = 60000, properties: ConveyProperties) {
+    public connect(receptionMessage: object, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
         let renderer = new Renderer(emitter);
         renderer.scrollStrategy = "container";
 
         new Gaia(renderer, new ConnectionListener(wait_timeout)).connect(this.gaiaUrl, this.identityId, this.username, this.password)
                 .then((connection: any) => {
-                    properties.getAll.forEach((value, key) => Properties.register(key, value));
                     if (environment == Env.DEV) {
                         connection.subscribe(ChannelType.CONTEXT, handlers.context);
                         connection.subscribe(ChannelType.LOG, handlers.log);
