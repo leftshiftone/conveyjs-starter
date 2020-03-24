@@ -1,13 +1,11 @@
 import {ContentCentricRenderer} from "@leftshiftone/convey";
 import Emitter from "@lib/emitter/Emitter";
 
-import {LoadingIndicator} from "@bootstrap/LoadingIndicator";
+import {LoadingConnector} from "@lib/shellConnector/LoadingIndicator";
 
 export default class Renderer extends ContentCentricRenderer {
     private emitter: Emitter;
     private loading = false;
-
-    private readonly loadingIndicator = LoadingIndicator();
 
     public constructor(emitter: Emitter) {
         super();
@@ -32,11 +30,10 @@ export default class Renderer extends ContentCentricRenderer {
         let botResponse = container.getElementsByClassName("lto-left");
         if (userInput.length > 0 && !this.loading) {
             this.loading = true;
-            this.content.appendChild(this.loadingIndicator);
-
+            LoadingConnector.setVisibility(true);
         } else if (this.loading && botResponse.length > 0) {
             this.loading = false;
-            this.content.removeChild(this.loadingIndicator);
+            LoadingConnector.setVisibility(false);
         }
     }
 }

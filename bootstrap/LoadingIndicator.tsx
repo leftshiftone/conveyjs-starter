@@ -1,9 +1,9 @@
-export function LoadingIndicator() {
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = "spinner-border spinner-border-sm lto-custom-loading-indicator";
-    const loadingChild = document.createElement('span');
-    loadingChild.className = "sr-only";
+import React from "react";
 
-    loadingIndicator.appendChild(loadingChild);
-    return loadingIndicator;
+export function LoadingIndicator() {
+    return (
+        <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>
+    )
 }
