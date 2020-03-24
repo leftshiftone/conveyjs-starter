@@ -21,6 +21,16 @@ export default class Renderer extends ContentCentricRenderer {
 
         }*/
 
+        // Set Input Field for user active (e.g. on specific message from prompt)
+        /*if (container.querySelector(".lto-text")) {
+            let elements = container.querySelectorAll(".lto-text");
+            elements.forEach(e => {
+                if (e.textContent === "Please ask me anything...") {
+                    InputConnector.setVisibility('unset');
+                }
+            });
+        }*/
+
         this.content.appendChild(container);
         this.checkCommunicationState(container);
     };
