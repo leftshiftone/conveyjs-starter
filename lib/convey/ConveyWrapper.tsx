@@ -1,16 +1,17 @@
 import React from 'react';
 
 import Emitter from "@lib/emitter/Emitter";
-import Renderer from "@lib/renderer/Renderer";
+import Renderer from "@lib/convey/renderer/Renderer";
 
-import {ChannelType, EventStream, Gaia, Properties} from "@leftshiftone/convey";
+import {ChannelType, EventStream, Gaia} from "@leftshiftone/convey";
 
 import {Env} from '@environment/Environment';
 
-import handlers from '@handler/Handlers';
-import {disableLogging} from "@handler/Logging";
+import channelHandlers from '@lib/convey/handler/ChannelHandlers';
+import {disableLogging} from "@lib/convey/handler/LoggingHandler";
 
-import {ConnectionListener} from "@convey/ConnectionListener";
+import {ConnectionListener} from "@lib/convey/ConnectionListener";
+import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
 
 export class ConveyWrapper {
     private static INSTANCE: ConveyWrapper;
@@ -36,22 +37,22 @@ export class ConveyWrapper {
         EventStream.emit(method, obj)
     }
 
-    public connect(receptionMessage: object, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
+    public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
         let renderer = new Renderer(emitter);
         renderer.scrollStrategy = "container";
 
         new Gaia(renderer, new ConnectionListener(wait_timeout)).connect(this.gaiaUrl, this.identityId, this.username, this.password)
                 .then((connection: any) => {
                     if (environment == Env.DEV) {
-                        connection.subscribe(ChannelType.CONTEXT, handlers.context);
-                        connection.subscribe(ChannelType.LOG, handlers.log);
+                        connection.subscribe(ChannelType.CONTEXT, channelHandlers.context);
+                        connection.subscribe(ChannelType.LOG, channelHandlers.log);
                     }
                     if (environment == Env.PROD) {
                         console.info("Logging is disabled");
                         disableLogging();
                     }
-                    connection.subscribe(ChannelType.NOTIFICATION, handlers.notification);
-                    connection.subscribe(ChannelType.TEXT, handlers.text);
+                    connection.subscribe(ChannelType.NOTIFICATION, channelHandlers.notification);
+                    connection.subscribe(ChannelType.TEXT, channelHandlers.text);
                     connection.reception(receptionMessage);
                     this.connection = connection;
                 })

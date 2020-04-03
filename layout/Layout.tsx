@@ -7,7 +7,7 @@ import Emitter from '@lib/emitter/Emitter';
 
 import Footer from './footer/Footer';
 import Header from './header/Header';
-import Login from './Login';
+import Login from '@components/view/login/LoginView';
 
 import "./Layout.css"
 

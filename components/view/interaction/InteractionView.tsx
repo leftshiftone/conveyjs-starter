@@ -4,12 +4,12 @@ import {Env, envWithDefaultOf, GaiaUrl} from '@environment/Environment';
 
 import {EmitterAware} from "@lib/emitter/Emitter";
 
-import {IReceptionMessage} from "@convey/model/reception/IReceptionMessage";
-import ReceptionMessage from "@convey/model/reception/ReceptionMessage";
+import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
+import ReceptionMessage from "@lib/convey/model/reception/ReceptionMessage";
 
-import {ConveyWrapper} from "@convey/ConveyWrapper";
+import {ConveyWrapper} from "@lib/convey/ConveyWrapper";
 
-import InteractionContent from "@components/interaction/InteractionContent";
+import InteractionContent from "@components/view/interaction/InteractionContent";
 
 import ConnectionModal from "@components/modal/ConnectionModal";
 
@@ -53,14 +53,14 @@ export default function (props: EmitterAware) {
 
     function connect(gaiaUrl: string,
                      gaiaIdentityId: string,
-                     receptionPayload: object,
+                     receptionMessage: IReceptionMessage,
                      environment: Env,
                      username: string | null = null,
                      password: string | null = null,
                      wait_timeout: number | null = null) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
-            conveyWrapper.connect(receptionPayload, environment, props.emitter, wait_timeout || 60000);
+            conveyWrapper.connect(receptionMessage, environment, props.emitter, wait_timeout || 60000);
         } else {
             console.error("Unable to connect to server")
         }

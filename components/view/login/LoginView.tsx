@@ -4,7 +4,7 @@ import {Button, Input, InputGroup, InputGroupAddon, InputGroupText} from 'reacts
 
 import Emitter from '@lib/emitter/Emitter';
 
-import './Login.css';
+import './LoginView.css';
 
 export default function (props: IProps) {
     const [email, setEmail] = useState("");
