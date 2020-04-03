@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 
-import {ConnectionListener, ConnectionState} from "@convey/ConnectionListener";
+import {ConnectionListener, ConnectionState} from "@lib/convey/ConnectionListener";
 
 import {interval} from "rxjs";
 import {timeout} from "rxjs/operators";

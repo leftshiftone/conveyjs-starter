@@ -8,14 +8,14 @@ import "./InteractionContent.css";
 
 import {EmitterAware} from "@lib//emitter/Emitter";
 import {CONVEY_EVENT} from "@environment/Identifier";
-import {TextMessage} from "@convey/model/text/TextMessage";
+import {TextMessage} from "@lib/convey/model/text/TextMessage";
 
-import {CustomRenderer} from '@lib//renderer/CustomRenderer';
+import {CustomRenderer} from '@lib//convey/renderer/CustomRenderer';
 
 import {InputConnector} from '@lib/shellConnector/Input';
 import {LoadingConnector} from '@lib/shellConnector/LoadingIndicator';
 
-import {LoadingIndicator} from "@bootstrap/LoadingIndicator";
+import {LoadingIndicator} from "@components/common/LoadingIndicator";
 
 /**
  * Renders the actual GAIA responses alias Conversational UI

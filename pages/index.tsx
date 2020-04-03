@@ -6,7 +6,7 @@ import {testStyle} from 'style/TestStyle';
 
 import _JSXStyle from 'styled-jsx/style'
 
-import InteractionView from "@components/interaction/InteractionView";
+import InteractionView from "@components/view/interaction/InteractionView";
 import Layout from '@layout/Layout';
 
 import {EmitterContext} from "@lib/emitter/EmitterContext";

@@ -2,9 +2,9 @@ import React, {ReactElement} from "react";
 import * as ReactDOM from "react-dom";
 
 import {EmitterAware} from "@lib/emitter/Emitter";
-import {CustomElement} from "@lib/renderer/CustomElements";
+import {CustomElement} from "@lib/convey/renderer/CustomElements";
 
-import {TextMessage} from "@convey/model/text/TextMessage";
+import {TextMessage} from "@lib/convey/model/text/TextMessage";
 
 import Template from "@components/custom/Template";
 
