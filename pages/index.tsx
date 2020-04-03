@@ -1,6 +1,6 @@
 import React from 'react';
 
-import 'components/common/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {testStyle} from 'style/TestStyle';
 
