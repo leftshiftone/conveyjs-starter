@@ -1185,10 +1185,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@leftshiftone/convey@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-2.0.1.tgz#6ae52daea4e594b1e422f13e466b60e10c95b7d0"
-  integrity sha512-Y/yVPyTaMD+/HIBkWivDiSAVe7JaBi+858MsJiZbnxNDj8+0B+ZabAj6ljBc4Vzhs404X9ynwBBLNOKN2LLoRA==
+"@leftshiftone/convey@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-2.0.2.tgz#70ed50b7f8251b52e8a2916f1182cc7185c3e81d"
+  integrity sha512-mfRntw+kGiVE4ejQjS+2lwfFO5rFIFRqwbiMGceB/WQB2Kc89Cw/eKOLoAJL3Qd5dicN1R8A1WS4ZYtxp3rOmA==
   dependencies:
     "@zxing/library" "^0.12.4"
     browser-image-compression "^1.0.6"

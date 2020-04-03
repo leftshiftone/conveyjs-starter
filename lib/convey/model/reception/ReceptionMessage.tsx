@@ -4,9 +4,9 @@ import {Navigator} from "@leftshiftone/convey";
 export default class ReceptionMessage {
 
     public static get(): IReceptionMessage | undefined {
-        const message = Navigator.getUrlParam("message");
+        const isMobile = Navigator.isMobile();
         return new class implements IReceptionMessage {
-            message: string | null = message;
+            isMobile: boolean = isMobile;
         }
     }
 }

@@ -1,3 +1,3 @@
 export interface IReceptionMessage {
-    message?: string | null
+    isMobile: boolean
 }
