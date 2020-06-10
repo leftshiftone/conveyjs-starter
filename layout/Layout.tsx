@@ -30,10 +30,10 @@ export default function (props: IProps) {
                     <title>{props.title}</title>
                 </Head>
                 <Header
-                        img={"/static/lso_mini.png"}
-                        imgWidth={"55px"}
-                        link={"https://github.com/leftshiftone/conveyjs-starter"}
-                        linkLabel={"conveyjs starter"}
+                    img={"/static/lso_mini.png"}
+                    imgWidth={"55px"}
+                    link={"https://github.com/leftshiftone/conveyjs-starter"}
+                    linkLabel={"conveyjs starter"}
                 />
                 <Container>
                     {!isIE && (

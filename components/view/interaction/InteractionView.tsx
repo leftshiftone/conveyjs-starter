@@ -15,7 +15,7 @@ import ConnectionModal from "@components/modal/ConnectionModal";
 
 import {Navigator} from "@leftshiftone/convey";
 
-import './InteractionView.css';
+import './InteractionView.scss';
 
 export default function (props: EmitterAware) {
     let conveyWrapper: ConveyWrapper | null = null;
