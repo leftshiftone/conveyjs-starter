@@ -1,0 +1,25 @@
+$main: #5E2CFF;
+$secondary: #4AF0C7;
+$white: #fff;
+$black: #000;
+
+.lto-submit {
+  background-image: linear-gradient(to bottom right, $main, $secondary);
+}
+
+.lto-button {
+  background-image: linear-gradient(to bottom right, $secondary, $main);
+}
+
+/* Add and Style Themes */
+.dark-theme {
+  &.lto-block, &.lto-form,
+  .lto-block, .lto-form {
+    color: $white;
+    background: $black;
+  }
+
+  .lto-label {
+    color: $white;
+  }
+}
