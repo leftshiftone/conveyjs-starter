@@ -37,7 +37,7 @@ export default function (props: EmitterAware) {
                     connect(url, identityId, receptionMessage, environment, username, password, parseInt(wait_timout));
                 }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
-            connect(GaiaUrl.LOCAL,
+            connect(GaiaUrl.INTEGRATION,
                     "",
                     receptionMessage, Env.DEV,
                     null,
