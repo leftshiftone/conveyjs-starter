@@ -4,7 +4,7 @@ import React, {
     useRef
 } from "react";
 
-import "./InteractionContent.css";
+import "./InteractionContent.scss";
 
 import {EmitterAware} from "@lib//emitter/Emitter";
 import {CONVEY_EVENT} from "@environment/Identifier";
