@@ -15,24 +15,26 @@ import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
 
 export class ConveyWrapper {
     private static INSTANCE: ConveyWrapper;
-    private readonly gaiaUrl: string;
+    private readonly url: string;
+    private readonly port: number;
     private readonly identityId: string;
     private readonly username?: string | null;
     private readonly password?: string | null;
     private connection: any;
 
-    private constructor(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null) {
-        this.gaiaUrl = gaiaUrl;
+    private constructor(url: string, port: number, identityId: string, username: string | null = null, password: string | null = null) {
+        this.url = url;
+        this.port = port;
         this.identityId = identityId;
         this.username = username;
         this.password = password;
     }
 
-    public static init(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
+    public static init(url: string, port: number, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
         if (username || password) {
-            return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId, username, password))
+            return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(url, port, identityId, username, password))
         }
-        return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId))
+        return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(url, port, identityId))
     }
 
     public static emit(method: string, obj: object) {
@@ -46,7 +48,7 @@ export class ConveyWrapper {
         const header = new QueueHeader(this.identityId, channelId)
 
         let gaia = new Gaia(renderer);
-        gaia.connect(new QueueOptions(this.gaiaUrl, 61616, this.username, this.password))
+        gaia.connect(new QueueOptions(this.url, this.port, this.username, this.password))
                 .then(connection => {
                     const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`${channelId} interaction:`, payload));
                     connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log(`${channelId} Notification:`, payload));
