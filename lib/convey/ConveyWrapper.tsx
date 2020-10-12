@@ -3,7 +3,15 @@ import React from 'react';
 import Emitter from "@lib/emitter/Emitter";
 import Renderer from "@lib/convey/renderer/Renderer";
 
-import {ChannelType, EventStream, Gaia} from "@leftshiftone/convey";
+import {
+    ChannelType,
+    ConversationQueueType,
+    EventStream,
+    Gaia,
+    MultiTargetRenderer,
+    QueueHeader,
+    QueueOptions
+} from "@leftshiftone/convey";
 
 import {Env} from '@environment/Environment';
 
@@ -24,6 +32,8 @@ export class ConveyWrapper {
     private constructor(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null) {
         this.gaiaUrl = gaiaUrl;
         this.identityId = identityId;
+        this.username = username;
+        this.password = password;
     }
 
     public static init(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
@@ -38,24 +48,27 @@ export class ConveyWrapper {
     }
 
     public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
-        let renderer = new Renderer(emitter);
-        renderer.scrollStrategy = "container";
+        const header = new QueueHeader(this.identityId, "channel1")
+        const renderer = new MultiTargetRenderer({
+            "channel1": new Renderer(emitter)
+        })
 
-        new Gaia(renderer, new ConnectionListener(wait_timeout)).connect(this.gaiaUrl, this.identityId, this.username, this.password)
-                .then((connection: any) => {
+        let gaia = new Gaia(renderer);
+        gaia.connect(new QueueOptions(this.gaiaUrl, 61616, this.username, this.password))
+                .then(connection => {
+                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`1 interaction:`, payload));
+                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log('1 Notification:', payload));
                     if (environment == Env.DEV) {
-                        connection.subscribe(ChannelType.CONTEXT, channelHandlers.context);
-                        connection.subscribe(ChannelType.LOG, channelHandlers.log);
+                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log('1 Log:', payload))
+                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log('1 context:', payload))
                     }
                     if (environment == Env.PROD) {
                         console.info("Logging is disabled");
                         disableLogging();
                     }
-                    connection.subscribe(ChannelType.NOTIFICATION, channelHandlers.notification);
-                    connection.subscribe(ChannelType.TEXT, channelHandlers.text);
-                    connection.reception(receptionMessage);
+                    subscription.reception(receptionMessage);
                     this.connection = connection;
-                })
+                });
     }
 
     public disconnect() {
