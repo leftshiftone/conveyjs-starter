@@ -39,21 +39,20 @@ export class ConveyWrapper {
         EventStream.emit(method, obj)
     }
 
-    public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
-        const channelId = "channel1";
+    public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, channelId, wait_timeout: number = 60000) {
         const renderer = new MultiTargetRenderer({
-            channelId : new Renderer(emitter)
+            [channelId]: new Renderer(emitter)
         })
         const header = new QueueHeader(this.identityId, channelId)
 
         let gaia = new Gaia(renderer);
         gaia.connect(new QueueOptions(this.gaiaUrl, 61616, this.username, this.password))
                 .then(connection => {
-                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`1 interaction:`, payload));
-                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log('1 Notification:', payload));
+                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`${channelId} interaction:`, payload));
+                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log(`${channelId} Notification:`, payload));
                     if (environment == Env.DEV) {
-                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log('1 Log:', payload))
-                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log('1 context:', payload))
+                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log(`${channelId} Log:`, payload))
+                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log(`${channelId} context:`, payload))
                     }
                     if (environment == Env.PROD) {
                         console.info("Logging is disabled");

@@ -60,7 +60,7 @@ export default function (props: EmitterAware) {
                      wait_timeout: number | null = null) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaIdentityId, username, password);
-            conveyWrapper.connect(receptionMessage, environment, props.emitter, wait_timeout || 60000);
+            conveyWrapper.connect(receptionMessage, environment, props.emitter, "channel1", wait_timeout || 60000);
         } else {
             console.error("Unable to connect to server")
         }
