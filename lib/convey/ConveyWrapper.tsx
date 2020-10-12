@@ -1,10 +1,7 @@
 import React from 'react';
-
 import Emitter from "@lib/emitter/Emitter";
 import Renderer from "@lib/convey/renderer/Renderer";
-
 import {
-    ChannelType,
     ConversationQueueType,
     EventStream,
     Gaia,
@@ -12,13 +9,8 @@ import {
     QueueHeader,
     QueueOptions
 } from "@leftshiftone/convey";
-
 import {Env} from '@environment/Environment';
-
-import channelHandlers from '@lib/convey/handler/ChannelHandlers';
 import {disableLogging} from "@lib/convey/handler/LoggingHandler";
-
-import {ConnectionListener} from "@lib/convey/ConnectionListener";
 import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
 
 export class ConveyWrapper {
