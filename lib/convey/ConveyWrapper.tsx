@@ -1,61 +1,68 @@
 import React from 'react';
-
 import Emitter from "@lib/emitter/Emitter";
 import Renderer from "@lib/convey/renderer/Renderer";
-
-import {ChannelType, EventStream, Gaia} from "@leftshiftone/convey";
-
+import {
+    ConversationQueueType,
+    EventStream,
+    Gaia,
+    MultiTargetRenderer,
+    QueueHeader,
+    QueueOptions
+} from "@leftshiftone/convey";
 import {Env} from '@environment/Environment';
-
-import channelHandlers from '@lib/convey/handler/ChannelHandlers';
 import {disableLogging} from "@lib/convey/handler/LoggingHandler";
-
-import {ConnectionListener} from "@lib/convey/ConnectionListener";
 import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
 
 export class ConveyWrapper {
     private static INSTANCE: ConveyWrapper;
-    private readonly gaiaUrl: string;
+    private readonly url: string;
+    private readonly port: number;
     private readonly identityId: string;
     private readonly username?: string | null;
     private readonly password?: string | null;
     private connection: any;
 
-    private constructor(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null) {
-        this.gaiaUrl = gaiaUrl;
+    private constructor(url: string, port: number, identityId: string, username: string | null = null, password: string | null = null) {
+        this.url = url;
+        this.port = port;
         this.identityId = identityId;
+        this.username = username;
+        this.password = password;
     }
 
-    public static init(gaiaUrl: string, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
+    public static init(url: string, port: number, identityId: string, username: string | null = null, password: string | null = null): ConveyWrapper {
         if (username || password) {
-            return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId, username, password))
+            return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(url, port, identityId, username, password))
         }
-        return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(gaiaUrl, identityId))
+        return this.INSTANCE || (this.INSTANCE = new ConveyWrapper(url, port, identityId))
     }
 
     public static emit(method: string, obj: object) {
         EventStream.emit(method, obj)
     }
 
-    public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
-        let renderer = new Renderer(emitter);
-        renderer.scrollStrategy = "container";
+    public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, channelId, wait_timeout: number = 60000) {
+        const renderer = new MultiTargetRenderer({
+            [channelId]: new Renderer(emitter)
+        })
+        const header = new QueueHeader(this.identityId, channelId)
 
-        new Gaia(renderer, new ConnectionListener(wait_timeout)).connect(this.gaiaUrl, this.identityId, this.username, this.password)
-                .then((connection: any) => {
+        let gaia = new Gaia(renderer);
+        gaia.connect(new QueueOptions(this.url, this.port, this.username, this.password))
+                .then(connection => {
+                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`${channelId} interaction:`, payload));
+                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log(`${channelId} Notification:`, payload));
                     if (environment == Env.DEV) {
-                        connection.subscribe(ChannelType.CONTEXT, channelHandlers.context);
-                        connection.subscribe(ChannelType.LOG, channelHandlers.log);
+                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log(`${channelId} Log:`, payload))
+                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log(`${channelId} context:`, payload))
                     }
                     if (environment == Env.PROD) {
                         console.info("Logging is disabled");
                         disableLogging();
                     }
-                    connection.subscribe(ChannelType.NOTIFICATION, channelHandlers.notification);
-                    connection.subscribe(ChannelType.TEXT, channelHandlers.text);
-                    connection.reception(receptionMessage);
+                    subscription.reception(receptionMessage);
                     this.connection = connection;
-                })
+                });
     }
 
     public disconnect() {
