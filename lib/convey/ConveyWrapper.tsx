@@ -40,10 +40,11 @@ export class ConveyWrapper {
     }
 
     public connect(receptionMessage: IReceptionMessage, environment: Env, emitter: Emitter, wait_timeout: number = 60000) {
-        const header = new QueueHeader(this.identityId, "channel1")
+        const channelId = "channel1";
         const renderer = new MultiTargetRenderer({
-            "channel1": new Renderer(emitter)
+            channelId : new Renderer(emitter)
         })
+        const header = new QueueHeader(this.identityId, channelId)
 
         let gaia = new Gaia(renderer);
         gaia.connect(new QueueOptions(this.gaiaUrl, 61616, this.username, this.password))

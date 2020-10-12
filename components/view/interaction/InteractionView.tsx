@@ -38,10 +38,10 @@ export default function (props: EmitterAware) {
                 }).catch(reason => {
             console.warn(`Unable to retrieve environment: ${reason}`);
             connect(GaiaUrl.LOCAL,
-                    "d32829c8-5900-4346-9577-25e8146d1e78",
+                    "",
                     receptionMessage, Env.DEV,
-                    "default",
-                    "test",
+                    "",
+                    "",
                     60000);
         });
 
