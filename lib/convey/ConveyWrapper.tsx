@@ -12,6 +12,7 @@ import {
 import {Env} from '@environment/Environment';
 import {disableLogging} from "@lib/convey/handler/LoggingHandler";
 import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
+import ChannelHandlers from "@lib/convey/handler/ChannelHandlers";
 
 export class ConveyWrapper {
     private static INSTANCE: ConveyWrapper;
@@ -51,7 +52,10 @@ export class ConveyWrapper {
         gaia.connect(new QueueOptions(this.url, this.port, this.username, this.password))
                 .then(connection => {
                     const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`${channelId} interaction:`, payload));
-                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => console.log(`${channelId} Notification:`, payload));
+                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => {
+                        console.log(`${channelId} Notification:`, payload);
+                        payload && ChannelHandlers.notification(payload[0]);
+                    });
                     if (environment == Env.DEV) {
                         connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log(`${channelId} Log:`, payload))
                         connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log(`${channelId} context:`, payload))
