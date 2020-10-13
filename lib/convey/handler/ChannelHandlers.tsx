@@ -18,6 +18,9 @@ const logging = (message: any, channelId = "") => {
 };
 
 const interaction = (message: any, channelId = "") => {
+    if (message.elements) {
+        CustomRenderer.render(message);
+    }
     console.debug(channelId, "Interaction:", message);
 };
 
