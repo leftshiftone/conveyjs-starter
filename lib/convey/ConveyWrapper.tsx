@@ -51,14 +51,15 @@ export class ConveyWrapper {
         let gaia = new Gaia(renderer);
         gaia.connect(new QueueOptions(this.url, this.port, this.username, this.password))
                 .then(connection => {
-                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) => console.log(`${channelId} interaction:`, payload));
-                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) => {
-                        console.log(`${channelId} Notification:`, payload);
-                        payload && ChannelHandlers.notification(payload[0]);
-                    });
+                    const subscription = connection.subscribe(ConversationQueueType.INTERACTION, header, (payload) =>
+                            payload && ChannelHandlers.interaction(payload, channelId));
+                    connection.subscribe(ConversationQueueType.NOTIFICATION, header, (payload) =>
+                        payload && ChannelHandlers.notification(payload[0], channelId));
                     if (environment == Env.DEV) {
-                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) => console.log(`${channelId} Log:`, payload))
-                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) => console.log(`${channelId} context:`, payload))
+                        connection.subscribe(ConversationQueueType.LOGGING, header, (payload) =>
+                                payload && ChannelHandlers.log(payload, channelId));
+                        connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) =>
+                                payload && ChannelHandlers.context(payload, channelId));
                     }
                     if (environment == Env.PROD) {
                         console.info("Logging is disabled");
