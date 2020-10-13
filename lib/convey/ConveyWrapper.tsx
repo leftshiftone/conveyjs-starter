@@ -57,7 +57,7 @@ export class ConveyWrapper {
                         payload && ChannelHandlers.notification(payload[0], channelId));
                     if (environment == Env.DEV) {
                         connection.subscribe(ConversationQueueType.LOGGING, header, (payload) =>
-                                payload && ChannelHandlers.log(payload, channelId));
+                                payload && ChannelHandlers.logging(payload, channelId));
                         connection.subscribe(ConversationQueueType.CONTEXT, header, (payload) =>
                                 payload && ChannelHandlers.context(payload, channelId));
                     }

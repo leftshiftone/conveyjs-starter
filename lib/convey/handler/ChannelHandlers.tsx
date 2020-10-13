@@ -4,8 +4,7 @@ import {CustomRenderer} from "@lib/convey/renderer/CustomRenderer";
 import {ProgressConnector} from "@lib/shellConnector/ProgressConnector";
 
 const notification = (message: any, channelId = "") => {
-    console.debug(channelId, "Notification:");
-    console.debug(message);
+    console.debug(channelId, "Notification:", message);
 
     if (message.max_progress) {
         ProgressConnector.setMaxProgress(message.max_progress);
@@ -14,34 +13,21 @@ const notification = (message: any, channelId = "") => {
     }
 };
 
-const log = (message: any, channelId = "") => {
-    console.debug(channelId, "Log:");
-    console.debug(message);
-};
-
-const text = (message: TextMessage) => {
-    if (message.elements) {
-        CustomRenderer.render(message);
-    }
-
-    console.debug("Text:");
-    console.debug(message);
+const logging = (message: any, channelId = "") => {
+    console.debug(channelId, "Logging:", message);
 };
 
 const interaction = (message: any, channelId = "") => {
-    console.debug(channelId, "Interaction:");
-    console.debug(message);
+    console.debug(channelId, "Interaction:", message);
 };
 
 const context = (message: any, channelId = "") => {
-    console.debug(channelId, "Context:");
-    console.debug(message);
+    console.debug(channelId, "Context:", message);
 };
 
 export default {
     notification,
-    log,
-    text,
+    logging,
     interaction,
     context
 }
