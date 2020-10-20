@@ -1256,12 +1256,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@leftshiftone/convey@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-3.1.0.tgz#aad9c4a21cb9b01cbf93a82b9f99f907201d7f2e"
-  integrity sha512-YZCHvOfFhvX2jjzaku6Y6QTlOJUo3pK7VhpmkFHsTORVviJJy7JUr3hN4ELXdt9Owv5xXuR3tJOC0faqGCazBQ==
+"@leftshiftone/convey@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-3.1.1.tgz#c05a470980c4cca397be766da53a1ccc3d7a07b1"
+  integrity sha512-ujoFwP6+bkzLAVYX3JGgbYD6HrXI1z65DoAFqMYzXrGD6IIkP+Y/086ypi96ZYxRNlAORk6GCBKunVdaoectyQ==
   dependencies:
-    "@leftshiftone/gaia-sdk" "^2.0.3"
+    "@leftshiftone/gaia-sdk" "^2.1.0"
     "@zxing/library" "^0.12.4"
     browser-image-compression "^1.0.6"
     d3 "^5.8.0"
@@ -1275,10 +1275,10 @@
     recordrtc "5.5.4"
     reveal.js "^3.8.0"
 
-"@leftshiftone/gaia-sdk@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@leftshiftone/gaia-sdk/-/gaia-sdk-2.0.3.tgz#7bc841280f21986098349e796fb6837672d1d7f8"
-  integrity sha512-6ZfNSxL0Zhj+54552uXv8kzpRnHldd4UHG7c7eCHMf4guCWvgMYNivf+AC7EF0IukpqKS58HqFvlY8cxFuf34A==
+"@leftshiftone/gaia-sdk@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@leftshiftone/gaia-sdk/-/gaia-sdk-2.1.0.tgz#1237f8d785434fb4e390645ec85d6e395b1eb2f1"
+  integrity sha512-pyx/7I/UJaUo/t6UYB9eXUXuMXVXki7HndbVcnwgKgNETtw9Mn61JnL2cvcYrtVY9YlG5ydvn1UUzGUCU8UFyw==
   dependencies:
     "@types/mqtt" "^2.5.0"
     axios "^0.19.2"
