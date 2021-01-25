@@ -6,7 +6,7 @@ import {
 // to trigger the Progress Module
 //  - add Notification in Behaviour with "max_progress" to set max progress
 //  - add Notification in Behaviour with "progress" to increase progress counter
-//  - see @lib/convey/handler/ChannelHandlers.tsx for update routine
+//  - see @lib/convey/handler/QueueHandlers.tsx for update routine
 //  - see @layout/footer/Footer.tsx for implementation
 export class ProgressConnector {
     public static MaxProgress = new BehaviorSubject<number>(0);

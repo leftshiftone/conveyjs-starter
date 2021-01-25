@@ -1256,12 +1256,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@leftshiftone/convey@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-3.1.1.tgz#c05a470980c4cca397be766da53a1ccc3d7a07b1"
-  integrity sha512-ujoFwP6+bkzLAVYX3JGgbYD6HrXI1z65DoAFqMYzXrGD6IIkP+Y/086ypi96ZYxRNlAORk6GCBKunVdaoectyQ==
+"@leftshiftone/convey@^3.5.0-rc.0":
+  version "3.5.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@leftshiftone/convey/-/convey-3.5.0-rc.0.tgz#1669bd698f18faff4efdf875e9574d41a3cd2a60"
+  integrity sha512-DVYx+WeFhXMC0oGdzA7ZBdF7iqBq1OjyFGrhLsqVSnrZo/mWKx4GFZO3ZxfFhrIZQq3MRAWCwZPcmqA4pAbwaQ==
   dependencies:
-    "@leftshiftone/gaia-sdk" "^2.1.0"
+    "@leftshiftone/gaia-sdk" "^3.1.0"
     "@zxing/library" "^0.12.4"
     browser-image-compression "^1.0.6"
     d3 "^5.8.0"
@@ -1271,16 +1271,16 @@
     d3-time "^1.0.10"
     d3-time-format "^2.1.3"
     d3-tip "^0.9.1"
+    flexsearch "^0.6.32"
     leaflet "^1.6.0"
     recordrtc "5.5.4"
     reveal.js "^3.8.0"
 
-"@leftshiftone/gaia-sdk@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@leftshiftone/gaia-sdk/-/gaia-sdk-2.1.0.tgz#1237f8d785434fb4e390645ec85d6e395b1eb2f1"
-  integrity sha512-pyx/7I/UJaUo/t6UYB9eXUXuMXVXki7HndbVcnwgKgNETtw9Mn61JnL2cvcYrtVY9YlG5ydvn1UUzGUCU8UFyw==
+"@leftshiftone/gaia-sdk@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@leftshiftone/gaia-sdk/-/gaia-sdk-3.1.0.tgz#90703597640e125633e10aaf910b4ce07628a967"
+  integrity sha512-MjdQ5POedeypjzFWgoZDh5CS5t42UDWzMlupPDFxlD1AE1NNhclhxnFlApqjPMv6x5zC9CbX2BNKU9yACWD86w==
   dependencies:
-    "@types/mqtt" "^2.5.0"
     axios "^0.19.2"
     bytebuffer "^5.0.1"
     cross-blob "^2.0.0"
@@ -1553,13 +1553,6 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
-
-"@types/mqtt@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@types/mqtt/-/mqtt-2.5.0.tgz#bc54c2d53f509282168da4a9af865de95bee5101"
-  integrity sha512-n+0/ErBin30j+UbhcHGK/STjHjh65k85WNR6NlUjRG0g9yctpF12pS+SOkwz0wmp+7momAo9Cyi4Wmvy8UsCQg==
-  dependencies:
-    mqtt "*"
 
 "@types/next@^9.0.0":
   version "9.0.0"
@@ -5013,6 +5006,11 @@ flat@^4.1.0:
   dependencies:
     is-buffer "~2.0.3"
 
+flexsearch@^0.6.32:
+  version "0.6.32"
+  resolved "https://registry.yarnpkg.com/flexsearch/-/flexsearch-0.6.32.tgz#1e20684d317af65baa445cdd9864a5f5b320f510"
+  integrity sha512-EF1BWkhwoeLtbIlDbY/vDSLBen/E5l/f1Vg7iX5CDymQCamcx1vhlc3tIZxIDplPjgi0jhG37c67idFbjg+v+Q==
+
 flush-write-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.1.1.tgz#8dd7d873a1babc207d94ead0c2e0e44276ebf2e8"
@@ -7533,7 +7531,7 @@ mqtt-packet@^6.3.2:
     debug "^4.1.1"
     process-nextick-args "^2.0.1"
 
-mqtt@*, mqtt@^4.1.0:
+mqtt@^4.1.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/mqtt/-/mqtt-4.2.1.tgz#7dbc4a01b5188186db90919c6fce318692c77004"
   integrity sha512-Iv893r+jWlo5GkNcPOfCGwW8M49IixwHiKLFFYTociEymSibUVCORVEjPXWPGzSxhn7BdlUeHicbRmWiv0Crkg==
