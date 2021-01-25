@@ -59,8 +59,8 @@ export default function (props: EmitterAware) {
                      gaiaIdentityId: string,
                      receptionMessage: IReceptionMessage,
                      environment: Env,
-                     username: string | null = null,
-                     password: string | null = null,
+                     username: string,
+                     password: string,
                      wait_timeout: number | null = null) {
         if (gaiaUrl && gaiaIdentityId) {
             conveyWrapper = ConveyWrapper.init(new ConveyOptions(gaiaUrl, gaiaPort, gaiaIdentityId, username, password));

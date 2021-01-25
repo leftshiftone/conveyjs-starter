@@ -4,18 +4,18 @@ export interface IConveyOptions {
     url: string
     port: number
     identityId: string
-    username: string | null
-    password: string | null
+    username: string
+    password: string
 }
 
 export class ConveyOptions implements IConveyOptions {
     identityId: string;
-    password: string | null;
+    password: string;
     port: number;
     url: string;
-    username: string | null;
+    username: string;
 
-    constructor(url: string, port: number, identityId: string, username: string | null = null, password: string | null = null) {
+    constructor(url: string, port: number, identityId: string, username: string, password: string) {
         this.url = url;
         this.port = port;
         this.identityId = identityId;
