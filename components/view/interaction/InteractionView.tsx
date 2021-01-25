@@ -8,6 +8,7 @@ import {IReceptionMessage} from "@lib/convey/model/reception/IReceptionMessage";
 import ReceptionMessage from "@lib/convey/model/reception/ReceptionMessage";
 
 import {ConveyWrapper} from "@lib/convey/ConveyWrapper";
+import {ConveyOptions} from "@lib/convey/ConveyOptions";
 
 import InteractionContent from "@components/view/interaction/InteractionContent";
 
@@ -58,12 +59,12 @@ export default function (props: EmitterAware) {
                      gaiaIdentityId: string,
                      receptionMessage: IReceptionMessage,
                      environment: Env,
-                     username: string | null = null,
-                     password: string | null = null,
+                     username: string,
+                     password: string,
                      wait_timeout: number | null = null) {
         if (gaiaUrl && gaiaIdentityId) {
-            conveyWrapper = ConveyWrapper.init(gaiaUrl, gaiaPort, gaiaIdentityId, username, password);
-            conveyWrapper.connect(receptionMessage, environment, props.emitter, "channel1", wait_timeout || 60000);
+            conveyWrapper = ConveyWrapper.init(new ConveyOptions(gaiaUrl, gaiaPort, gaiaIdentityId, username, password));
+            conveyWrapper.connect(receptionMessage, environment, props.emitter, wait_timeout || 60000);
         } else {
             console.error("Unable to connect to server")
         }
