@@ -5,5 +5,6 @@
  * @since 0.1.0
  */
 export enum CustomElement {
-    TEMPLATE = "intro"
+    TEMPLATE = "intro",
+    ROUTE_PLAN_LINK = "routenplan-link"
 }

@@ -4,9 +4,10 @@ import * as ReactDOM from "react-dom";
 import {EmitterAware} from "@lib/emitter/Emitter";
 import {CustomElement} from "@lib/convey/renderer/CustomElements";
 
-import {TextMessage} from "@lib/convey/model/text/TextMessage";
+import {ITextMessage, TextMessage} from "@lib/convey/model/text/ITextMessage";
 
 import Template from "@components/custom/Template";
+import MyIFrame from "@components/custom/MyIFrame";
 
 /**
  * Renders so-called 'custom-elements', meaning custom elements that are not part of the gaia-convey sdk but
@@ -16,17 +17,17 @@ import Template from "@components/custom/Template";
  * @since 0.1.0
  */
 export class CustomRenderer {
-    public static render(message: TextMessage) {
+    public static render(message: ITextMessage): void {
         if (!message) {
             return;
         }
 
-        switch (message.class) {
-            case CustomElement.TEMPLATE:
-                CustomRenderer.doRender(message.class, <Template/>);
-                break;
-            default:
-                break;
+        console.log("CustomRenderer render", message)
+
+        if (TextMessage.hasElement(message, CustomElement.TEMPLATE)) {
+            CustomRenderer.doRender(CustomElement.TEMPLATE, <Template/>);
+        } else if (TextMessage.hasElement(message, CustomElement.ROUTE_PLAN_LINK)) {
+            CustomRenderer.doRender(CustomElement.ROUTE_PLAN_LINK, <MyIFrame url={"https://google.com"}/>);
         }
     }
 

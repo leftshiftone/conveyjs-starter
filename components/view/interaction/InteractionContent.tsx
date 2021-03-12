@@ -8,7 +8,7 @@ import "./InteractionContent.scss";
 
 import {EmitterAware} from "@lib//emitter/Emitter";
 import {CONVEY_EVENT} from "@environment/Identifier";
-import {TextMessage} from "@lib/convey/model/text/TextMessage";
+import {ITextMessage} from "@lib/convey/model/text/ITextMessage";
 
 import {CustomRenderer} from '@lib//convey/renderer/CustomRenderer';
 
@@ -30,7 +30,7 @@ export default function (props: EmitterAware) {
     const [ loading, setLoading ] = useState<boolean>(false);
 
     useEffect(() => {
-        props.emitter.addListener(CONVEY_EVENT.ON_TEXT_MESSAGE, (textMessage: TextMessage) => {
+        props.emitter.addListener(CONVEY_EVENT.ON_TEXT_MESSAGE, (textMessage: ITextMessage) => {
             CustomRenderer.render(textMessage);
         });
 
