@@ -7,7 +7,7 @@ import {CustomElement} from "@lib/convey/renderer/CustomElements";
 import {ITextMessage, TextMessage} from "@lib/convey/model/text/ITextMessage";
 
 import Template from "@components/custom/Template";
-import MyIFrame from "@components/custom/MyIFrame";
+import OtherTemplateComponent from "@components/custom/OtherTemplateComponent";
 
 /**
  * Renders so-called 'custom-elements', meaning custom elements that are not part of the gaia-convey sdk but
@@ -25,8 +25,8 @@ export class CustomRenderer {
         let element: ITextMessage;
         if (TextMessage.hasElement(message, CustomElement.TEMPLATE)) {
             CustomRenderer.doRender(CustomElement.TEMPLATE, <Template/>);
-        } else if ((element = TextMessage.findMessageWithClass(message, CustomElement.ROUTE_PLAN_LINK))) {
-            CustomRenderer.doRender(CustomElement.ROUTE_PLAN_LINK, <MyIFrame url={element.value}/>);
+        } else if ((element = TextMessage.findMessageWithClass(message, CustomElement.OTHER_ELEMENT_WITH_VALUE_NEEDED))) {
+            CustomRenderer.doRender(CustomElement.OTHER_ELEMENT_WITH_VALUE_NEEDED, <OtherTemplateComponent value={element.value}/>);
         }
     }
 

@@ -5,6 +5,6 @@
  * @since 0.1.0
  */
 export enum CustomElement {
-    TEMPLATE = "intro",
-    ROUTE_PLAN_LINK = "routenplan-link"
+    TEMPLATE = "template",
+    OTHER_ELEMENT_WITH_VALUE_NEEDED = "other-class"
 }
