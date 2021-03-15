@@ -22,12 +22,11 @@ export class CustomRenderer {
             return;
         }
 
-        console.log("CustomRenderer render", message)
-
+        let element: ITextMessage;
         if (TextMessage.hasElement(message, CustomElement.TEMPLATE)) {
             CustomRenderer.doRender(CustomElement.TEMPLATE, <Template/>);
-        } else if (TextMessage.hasElement(message, CustomElement.ROUTE_PLAN_LINK)) {
-            CustomRenderer.doRender(CustomElement.ROUTE_PLAN_LINK, <MyIFrame url={"https://google.com"}/>);
+        } else if ((element = TextMessage.findMessageWithClass(message, CustomElement.ROUTE_PLAN_LINK))) {
+            CustomRenderer.doRender(CustomElement.ROUTE_PLAN_LINK, <MyIFrame url={element.value}/>);
         }
     }
 

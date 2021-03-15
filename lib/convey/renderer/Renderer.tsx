@@ -2,7 +2,6 @@ import {ContentCentricRenderer} from "@leftshiftone/convey";
 import Emitter from "@lib/emitter/Emitter";
 
 import {LoadingConnector} from "@lib/shellConnector/LoadingIndicator";
-import {InputConnector} from "@lib/shellConnector/Input";
 
 export default class Renderer extends ContentCentricRenderer {
     private emitter: Emitter;
@@ -16,8 +15,6 @@ export default class Renderer extends ContentCentricRenderer {
     public appendContent = (container: HTMLElement) => {
         if (!container)
             return;
-
-        InputConnector.setVisibility('unset'); // TODO: Is this correct to set this here? Why even need to set it?
 
         // Custom options for components
         /*if (container.querySelector(".")) {

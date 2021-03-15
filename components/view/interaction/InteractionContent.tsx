@@ -26,7 +26,7 @@ import {LoadingIndicator} from "@components/common/LoadingIndicator";
  */
 export default function (props: EmitterAware) {
     const content = useRef(null);
-    const [ inputVisible, setInputVisible ] = useState<string>('none');
+    const [ inputVisible, setInputVisible ] = useState<string>('unset');
     const [ loading, setLoading ] = useState<boolean>(false);
 
     useEffect(() => {

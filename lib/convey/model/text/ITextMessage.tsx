@@ -6,7 +6,6 @@ export const unpack = (message: ITextMessage): ITextMessage[] => {
 
 export class TextMessage {
     public static hasElement(message: ITextMessage, styleClass: string): boolean {
-        console.log("ITextMessage", message, styleClass)
         if (message.class && message.class.includes(styleClass)) {
             return true;
         } else if (!message.elements) {
@@ -14,10 +13,30 @@ export class TextMessage {
         }
 
         let hasElement = false;
-        for (let i = 0; i < message.elements.length; i++) {
-            hasElement = hasElement || TextMessage.hasElement(message.elements[i], styleClass)
+        const elements: ITextMessage[] = message.elements;
+        for (const element of elements) {
+            hasElement = hasElement || TextMessage.hasElement(element, styleClass)
         }
         return hasElement;
+    }
+
+    public static findMessageWithClass(message: ITextMessage, styleClass: string): ITextMessage | null {
+        if (!message.elements) {
+            return null;
+        }
+
+        let found: ITextMessage | null = null;
+        const elements: ITextMessage[] = message.elements;
+        for (const element of elements) {
+            if (element.class && element.class.includes(styleClass)) {
+                return element;
+            }
+            found = this.findMessageWithClass(element, styleClass);
+            if (found) {
+                return found;
+            }
+        }
+        return null;
     }
 }
 
