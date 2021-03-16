@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, ReactNode} from "react";
 import * as ReactDOM from "react-dom";
 
 import {EmitterAware} from "@lib/emitter/Emitter";
@@ -17,32 +17,25 @@ import OtherTemplateComponent from "@components/custom/OtherTemplateComponent";
  * @since 0.1.0
  */
 export class CustomRenderer {
-    public static render(message: ITextMessage): void {
-        if (!message) {
+    public static render(container: HTMLElement): void {
+        if (!container) {
             return;
         }
 
-        let element: ITextMessage;
-        if (TextMessage.hasElement(message, CustomElement.TEMPLATE)) {
-            CustomRenderer.doRender(CustomElement.TEMPLATE, <Template/>);
-        } else if ((element = TextMessage.findMessageWithClass(message, CustomElement.OTHER_ELEMENT_WITH_VALUE_NEEDED))) {
-            CustomRenderer.doRender(CustomElement.OTHER_ELEMENT_WITH_VALUE_NEEDED, <OtherTemplateComponent value={element.value}/>);
+        let selection: HTMLElement;
+        if ((selection = container.querySelector(CustomElement.TEMPLATE))) {
+            this.doReplace(selection, <Template/>)
+        }
+        if ((selection = container.querySelector(CustomElement.OTHER_ELEMENT_WITH_PROPS))) {
+            this.doReplace(selection, <OtherTemplateComponent value={selection.innerText}/>)
         }
     }
 
-    private static doRender(triggerClass: string, component: ReactElement<EmitterAware>): void {
-        const parent = document.querySelector(`.${triggerClass} `);
-        if (!CustomRenderer.nullOrUndefined(parent)) {
-            const placeHolder = document.createElement("div");
-            parent!.insertBefore(placeHolder, parent!.firstChild);
-
-            ReactDOM.render(component, placeHolder);
-        } else {
-            console.error(`could not find an element with the given class: ${triggerClass}`)
+    private static doReplace(selection: HTMLElement, component: ReactNode): void {
+        const placeHolder = document.createElement("div");
+        ReactDOM.render(component, placeHolder);
+        if (placeHolder.children.length) {
+            selection.replaceWith(placeHolder.children[0]);
         }
-    }
-
-    private static nullOrUndefined(obj: any) {
-        return obj === null || obj === undefined
     }
 }

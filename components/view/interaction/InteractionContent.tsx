@@ -30,10 +30,6 @@ export default function (props: EmitterAware) {
     const [ loading, setLoading ] = useState<boolean>(false);
 
     useEffect(() => {
-        props.emitter.addListener(CONVEY_EVENT.ON_TEXT_MESSAGE, (textMessage: ITextMessage) => {
-            CustomRenderer.render(textMessage);
-        });
-
         let inputCon = InputConnector.Visible.asObservable();
         const inputSub = inputCon.subscribe(data => {
             setInputVisible(data);

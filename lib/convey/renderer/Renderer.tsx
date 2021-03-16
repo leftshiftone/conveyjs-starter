@@ -2,6 +2,7 @@ import {ContentCentricRenderer} from "@leftshiftone/convey";
 import Emitter from "@lib/emitter/Emitter";
 
 import {LoadingConnector} from "@lib/shellConnector/LoadingIndicator";
+import {CustomRenderer} from "@lib/convey/renderer/CustomRenderer";
 
 export default class Renderer extends ContentCentricRenderer {
     private emitter: Emitter;
@@ -16,10 +17,7 @@ export default class Renderer extends ContentCentricRenderer {
         if (!container)
             return;
 
-        // Custom options for components
-        /*if (container.querySelector(".")) {
-
-        }*/
+        CustomRenderer.render(container);
 
         // Set Input Field for user active (e.g. on specific message from prompt)
         /*if (container.querySelector(".lto-text")) {
