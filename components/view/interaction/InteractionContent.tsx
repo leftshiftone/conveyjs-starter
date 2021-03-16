@@ -1,16 +1,9 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import "./InteractionContent.scss";
 
 import {EmitterAware} from "@lib//emitter/Emitter";
 import {CONVEY_EVENT} from "@environment/Identifier";
-import {ITextMessage} from "@lib/convey/model/text/ITextMessage";
-
-import {CustomRenderer} from '@lib//convey/renderer/CustomRenderer';
 
 import {InputConnector} from '@lib/shellConnector/Input';
 import {LoadingConnector} from '@lib/shellConnector/LoadingIndicator';

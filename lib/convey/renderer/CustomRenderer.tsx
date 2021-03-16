@@ -1,10 +1,6 @@
-import React, {ReactElement, ReactNode} from "react";
+import React, {ReactNode} from "react";
 import * as ReactDOM from "react-dom";
-
-import {EmitterAware} from "@lib/emitter/Emitter";
 import {CustomElement} from "@lib/convey/renderer/CustomElements";
-
-import {ITextMessage, TextMessage} from "@lib/convey/model/text/ITextMessage";
 
 import Template from "@components/custom/Template";
 import OtherTemplateComponent from "@components/custom/OtherTemplateComponent";
