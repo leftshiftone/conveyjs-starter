@@ -5,5 +5,6 @@
  * @since 0.1.0
  */
 export enum CustomElement {
-    TEMPLATE = "intro"
+    TEMPLATE = ".template",
+    OTHER_ELEMENT_WITH_PROPS = ".other-class"
 }

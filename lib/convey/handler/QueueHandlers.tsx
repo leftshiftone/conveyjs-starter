@@ -1,4 +1,3 @@
-import {CustomRenderer} from "@lib/convey/renderer/CustomRenderer";
 import {ProgressConnector} from "@lib/shellConnector/ProgressConnector";
 
 const notification = (payload: any, channelId = "") => {
@@ -19,9 +18,6 @@ const logging = (payload: any, channelId = "") => {
 };
 
 const interaction = (payload: any, channelId = "") => {
-    if (payload && payload.elements) {
-        CustomRenderer.render(payload);
-    }
     console.debug(channelId, "Interaction:", payload);
 };
 
