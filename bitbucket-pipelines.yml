@@ -35,7 +35,7 @@ pipelines:
     build-and-publish-image:
       - step:
           name: Build
-          image: atlassian/default-image:2
+          image: node:10-jessie
           script:
             - yarn install
             - echo $(node -pe "require('./package.json').version") > version.txt
