@@ -1,5 +1,5 @@
 image:
-  name: 007098893018.dkr.ecr.eu-central-1.amazonaws.com/ci-image:v0.1.0
+  name: 007098893018.dkr.ecr.eu-central-1.amazonaws.com/ci-image:1.0.1
   aws:
     access-key: $AWS_ACCESS_KEY_ID
     secret-key: $AWS_SECRET_ACCESS_KEY
@@ -35,7 +35,7 @@ pipelines:
     build-and-publish-image:
       - step:
           name: Build
-          image: atlassian/default-image:2
+          image: node:10-jessie
           script:
             - yarn install
             - echo $(node -pe "require('./package.json').version") > version.txt
