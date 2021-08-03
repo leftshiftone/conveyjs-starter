@@ -60,7 +60,7 @@ pipelines:
     release-major:
       - step:
           name: Release
-          image: atlassian/default-image:2
+          image: node:10-jessie
           caches:
             - node
           script:
