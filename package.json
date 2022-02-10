@@ -42,7 +42,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "reactstrap": "^8.4.1",
     "release-it": "^12.6.3",
     "ts-jest": "^25.5.1",
