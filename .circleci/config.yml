@@ -141,25 +141,25 @@ workflows:
               ignore: /.*/
             tags:
               only: /^release-patch$/
-  code-analytics:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - code-analytics:
-          context: leftshiftone-sonar
-  dependency-updates:
-    triggers:
-      - schedule:
-          cron: "0 1 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - dependency-updates:
-          context: leftshiftone-sonar
+#  code-analytics:
+#    triggers:
+#      - schedule:
+#          cron: "0 0 * * *"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - code-analytics:
+#          context: leftshiftone-sonar
+#  dependency-updates:
+#    triggers:
+#      - schedule:
+#          cron: "0 1 * * *"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - dependency-updates:
+#          context: leftshiftone-sonar
